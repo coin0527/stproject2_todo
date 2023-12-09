@@ -5,10 +5,12 @@ import { SignUp } from "./Login/SignUp";
 import { Todo } from "./pages/Todo";
 import { TodoSuccess } from "./pages/TodoSuccess";
 import { PageNotFound } from "./components/PagenotFound";
+import { Header } from "./components/Header";
 
 const Router = () => {
   return (
     <HashRouter>
+      <Header />
       <Routes>
         <Route path={routes.login} element={<Login />} />
         <Route path={routes.signup} element={<SignUp />} />
