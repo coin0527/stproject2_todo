@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Wrap = styled.div`
@@ -21,8 +22,8 @@ const ItemWrap = styled.ul`
   max-width: 150px;
   justify-content: space-between;
   li {
-    list-style: none;
     margin-right: 50px;
+    line-height: 50px;
   }
 `;
 const Item1 = styled.li``;
@@ -31,7 +32,9 @@ const Item2 = styled.li``;
 export const Header = () => {
   return (
     <Wrap>
-      <Logo> Todo </Logo>
+      <Link to={"/todo"}>
+        <Logo> Todo </Logo>
+      </Link>
 
       <ItemWrap>
         <Item1> one </Item1>
