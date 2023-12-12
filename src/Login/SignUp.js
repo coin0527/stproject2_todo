@@ -1,9 +1,10 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const SignupContainer = styled.div`
   max-width: 400px;
-  margin: auto;
+  margin: 200px auto;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -13,6 +14,8 @@ const SignupContainer = styled.div`
 const Title = styled.h2`
   text-align: center;
   color: #333;
+  font-size: 30px;
+  font-weight: 500;
 `;
 
 const Form = styled.form`
@@ -40,6 +43,38 @@ const Button = styled.button`
     background-color: #218838;
   }
 `;
+const Separ = styled.div`
+  width: 100%;
+  margin: 30px 0;
+  display: flex;
+  justify-content: space-between;
+  span {
+    display: block;
+    width: 40%;
+    height: 1px;
+    background-color: #dbdbdb;
+  }
+  b {
+    font-weight: 600;
+    color: #555;
+    line-height: 3px;
+  }
+`;
+
+const Signupq = styled.div`
+  display: flex;
+  opacity: 0.8;
+  justify-content: center;
+  h4 {
+    margin-left: 20px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+  h4:hover {
+    transition-duration: 0.8s;
+    color: blueviolet;
+  }
+`;
 
 export const SignUp = () => {
   const [username, setUsername] = useState("");
@@ -48,7 +83,6 @@ export const SignUp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // 여기에서 회원가입 로직을 추가하세요.
   };
 
   return (
@@ -62,19 +96,38 @@ export const SignUp = () => {
           onChange={(e) => setUsername(e.target.value)}
         />
         <Input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <Input
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
+        <Input
+          type="password"
+          placeholder="RPassword"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <Input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+
         <Button type="submit">Sign Up</Button>
       </Form>
+      <Separ>
+        <span></span>
+        <b>or</b>
+        <span></span>
+      </Separ>
+
+      <Signupq>
+        <h3>Do you have an ID?</h3>
+        <Link to={"/"}>
+          <h4> Login </h4>
+        </Link>
+      </Signupq>
     </SignupContainer>
   );
 };
