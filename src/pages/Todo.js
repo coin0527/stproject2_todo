@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
+import { Tododelete } from "../components/Tododelete";
 
 const Wrap = styled.div`
   width: 100%;
@@ -91,6 +92,7 @@ const Container = styled.div`
   @media screen and (max-width: 500px) {
     width: 100%;
     height: 100%;
+    max-height: 650px;
     top: 10%;
   }
 `;
@@ -102,28 +104,43 @@ const Footer = styled.div`
   justify-content: space-between;
   padding: 0px 10px 10px 10px;
   box-sizing: border-box;
+  h3 {
+    line-height: 30px;
+    margin-top: 10px;
+    font-weight: 600;
+    font-size: 20px;
+  }
   @media screen and (max-width: 500px) {
     max-width: 100%;
-    margin: 450px auto;
+    border: 1px solid black;
+    margin: 0;
+    position: absolute;
+    bottom: 100px;
+    right: 0;
   }
 `;
-const Darkmode = styled.button`
-  margin-top: 10px;
-`;
+
 const RightMenu = styled.div`
   width: 100%;
   max-width: 250px;
   display: flex;
   justify-content: space-between;
+  @media screen and (max-width: 500px) {
+    max-width: 200px;
+  }
 `;
+
 const SelectAll = styled.button`
   margin-top: 10px;
+  @media screen and (max-width: 500px) {
+    margin-top: 15px;
+  }
 `;
 const Complete = styled.button`
   margin-top: 10px;
-`;
-const Delete = styled.button`
-  margin-top: 10px;
+  @media screen and (max-width: 500px) {
+    margin-top: 15px;
+  }
 `;
 const Box = styled.div`
   width: 100%;
@@ -147,19 +164,24 @@ const Buttonlist = styled.ul`
 `;
 const Button1 = styled.button``;
 const Button2 = styled.button``;
-const Button3 = styled.button``;
 
 export const Todo = () => {
+  const [todos, setTodos] = useState([]);
   const { register, handleSubmit, reset } = useForm({
     mode: "onSubmit",
   });
-  const [todos, setTodos] = useState([]);
-
   const handleAddTodo = (data) => {
     setTodos([...todos, data.search]);
     reset();
   };
 
+  const handleDelete = (index) => {
+    const updatedTodos = [...todos];
+    updatedTodos.splice(index, 1);
+    setTodos(updatedTodos);
+  };
+
+  const count = todos.length; // 할일 갯수
   return (
     <Wrap>
       <InputWrap>
@@ -193,7 +215,7 @@ export const Todo = () => {
               <Buttonlist>
                 <Button1>하나</Button1>
                 <Button2>두울</Button2>
-                <Button3>세엣</Button3>
+                <Tododelete index={index} onDelete={handleDelete} />
               </Buttonlist>
             </Box>
           ))
@@ -202,11 +224,10 @@ export const Todo = () => {
         )}
       </Container>
       <Footer>
-        <Darkmode>다크모드</Darkmode>
+        <h3>count : {count}</h3>
         <RightMenu>
           <SelectAll>전체선택</SelectAll>
           <Complete>완료</Complete>
-          <Delete>삭제</Delete>
         </RightMenu>
       </Footer>
     </Wrap>
