@@ -107,7 +107,7 @@ export const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <div>
-            <label>
+            <label style={{ fontSize: "13px" }}>
               <input
                 type="checkbox"
                 style={{ marginRight: "10px", marginBottom: "15px" }}

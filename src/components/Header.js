@@ -4,7 +4,6 @@ import styled from "styled-components";
 const Wrap = styled.div`
   width: 100%;
   max-width: 100%;
-  border: 1px solid black;
   display: flex;
   justify-content: space-between;
   box-sizing: border-box;
