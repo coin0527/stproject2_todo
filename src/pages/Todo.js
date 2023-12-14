@@ -1,183 +1,57 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import styled from "styled-components";
 import { Tododelete } from "../components/Tododelete";
-
-const Wrap = styled.div`
-  width: 100%;
-  height: 80vh;
-  border-top: none;
-  box-sizing: border-box;
-`;
-const Form = styled.form`
-  width: 40%;
-`;
-const InputWrap = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 100px;
-`;
-const Input = styled.input`
-  all: unset;
-  box-sizing: border-box;
-  width: 95%;
-  height: 50px;
-  border: 1px solid black;
-  border-radius: 10px;
-  font-size: 30px;
-  font-weight: 600;
-  letter-spacing: -1px;
-  text-align: center;
-  background-color: skyblue;
-  color: white;
-  @media screen and (max-width: 500px) {
-    border-radius: 0;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 80%;
-    height: 100px;
-    border: none;
-    background-color: transparent;
-    color: black;
-  }
-`;
-const Button = styled.button`
-  all: unset;
-  width: 80px;
-  border: 1px solid black;
-  border-radius: 10px;
-  text-align: center;
-  background-color: skyblue;
-  color: #333;
-  font-weight: 600;
-  &:hover {
-    background-color: #0056b3;
-    transition-duration: 0.5s;
-  }
-
-  @media screen and (max-width: 500px) {
-    border-radius: 0;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 20%;
-    height: 100px;
-    border: none;
-    font-size: 30px;
-    background-color: transparent;
-  }
-`;
-const Container = styled.div`
-  width: 60%;
-  height: 50%;
-  max-height: 500px;
-  overflow-y: auto;
-  border: 1px solid black;
-  position: absolute;
-  top: 25%;
-  left: 50%;
-  transform: translate(-50%);
-  padding: 10px;
-  box-sizing: border-box;
-  p {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%);
-    font-size: 18px;
-    font-weight: 600;
-  }
-
-  @media screen and (max-width: 500px) {
-    width: 100%;
-    height: 100%;
-    max-height: 650px;
-    top: 10%;
-  }
-`;
-const Footer = styled.div`
-  width: 100%;
-  max-width: 50%;
-  margin: 530px auto;
-  display: flex;
-  justify-content: space-between;
-  padding: 0px 10px 10px 10px;
-  box-sizing: border-box;
-  h3 {
-    line-height: 30px;
-    margin-top: 10px;
-    font-weight: 600;
-    font-size: 20px;
-  }
-  @media screen and (max-width: 500px) {
-    max-width: 100%;
-    border: 1px solid black;
-    margin: 0;
-    position: absolute;
-    bottom: 100px;
-    right: 0;
-  }
-`;
-
-const RightMenu = styled.div`
-  width: 100%;
-  max-width: 250px;
-  display: flex;
-  justify-content: space-between;
-  @media screen and (max-width: 500px) {
-    max-width: 200px;
-  }
-`;
-
-const SelectAll = styled.button`
-  margin-top: 10px;
-  @media screen and (max-width: 500px) {
-    margin-top: 15px;
-  }
-`;
-const Complete = styled.button`
-  margin-top: 10px;
-  @media screen and (max-width: 500px) {
-    margin-top: 15px;
-  }
-`;
-const Box = styled.div`
-  width: 100%;
-  height: 10%;
-  display: flex;
-  padding: 15px 10px;
-  border: 1px solid black;
-  justify-content: space-between;
-  margin-bottom: 10px;
-`;
-const SContainer = styled.div`
-  display: flex;
-`;
-
-const Todolist = styled.div``;
-
-const Buttonlist = styled.ul`
-  button {
-    margin-right: 10px;
-  }
-`;
-const Button1 = styled.button``;
-const Button2 = styled.button``;
+import TodoCheckAll from "../components/TodoCheckAll";
+import {
+  Wrap,
+  Form,
+  InputWrap,
+  Input,
+  Button,
+  Container,
+  Footer,
+  RightMenu,
+  Complete,
+  Box,
+  SContainer,
+  Todolist,
+  Buttonlist,
+  Button1,
+  Button2,
+  Delete,
+} from "./TodoStyle";
 
 export const Todo = () => {
   const [todos, setTodos] = useState([]);
+  // 할 일
   const { register, handleSubmit, reset } = useForm({
+    // input
     mode: "onSubmit",
   });
   const handleAddTodo = (data) => {
-    setTodos([...todos, data.search]);
+    // 입력한 값 추가
+    setTodos([
+      ...todos,
+      { id: todos.length + 1, checked: false, text: data.search },
+    ]);
     reset();
   };
 
-  const handleDelete = (index) => {
-    const updatedTodos = [...todos];
-    updatedTodos.splice(index, 1);
+  const handleDelete = (id) => {
+    // 삭제
+    const updatedTodos = todos.filter((todo) => todo.id !== id);
+    setTodos(updatedTodos);
+  };
+  const handleDeleteChecked = () => {
+    // 체크된거 삭제
+    const updatedTodos = todos.filter((todo) => !todo.checked);
+    setTodos(updatedTodos);
+  };
+
+  const handleCheckboxChange = (id) => {
+    const updatedTodos = todos.map((todo) =>
+      todo.id === id ? { ...todo, checked: !todo.checked } : todo
+    );
     setTodos(updatedTodos);
   };
 
@@ -199,23 +73,25 @@ export const Todo = () => {
 
       <Container>
         {todos.length > 0 ? (
-          todos.map((todo, index) => (
-            <Box key={index}>
+          todos.map((todo) => (
+            <Box key={todo.id}>
               <SContainer>
                 <div>
                   <input
                     type="checkbox"
                     style={{ marginBottom: "15px", marginRight: "10px" }}
+                    checked={todo.checked}
+                    onChange={() => handleCheckboxChange(todo.id)}
                   />
                 </div>
 
-                <Todolist>{todo}</Todolist>
+                <Todolist>{todo.text}</Todolist>
               </SContainer>
 
               <Buttonlist>
                 <Button1>하나</Button1>
                 <Button2>두울</Button2>
-                <Tododelete index={index} onDelete={handleDelete} />
+                <Tododelete index={todo.id} onDelete={handleDelete} />
               </Buttonlist>
             </Box>
           ))
@@ -226,8 +102,9 @@ export const Todo = () => {
       <Footer>
         <h3>count : {count}</h3>
         <RightMenu>
-          <SelectAll>전체선택</SelectAll>
+          <TodoCheckAll todos={todos} setTodos={setTodos} />
           <Complete>완료</Complete>
+          <Delete onClick={handleDeleteChecked}>삭제</Delete>
         </RightMenu>
       </Footer>
     </Wrap>
