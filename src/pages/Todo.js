@@ -17,9 +17,9 @@ import {
   Todolist,
   Buttonlist,
   Button1,
-  Button2,
   Delete,
 } from "./TodoStyle";
+import { Todore } from "../components/Todore";
 
 export const Todo = () => {
   const [todos, setTodos] = useState([]);
@@ -49,8 +49,17 @@ export const Todo = () => {
   };
 
   const handleCheckboxChange = (id) => {
+    // 체크
     const updatedTodos = todos.map((todo) =>
       todo.id === id ? { ...todo, checked: !todo.checked } : todo
+    );
+    setTodos(updatedTodos);
+  };
+
+  const handleEditTodo = (id, editedText) => {
+    //모달
+    const updatedTodos = todos.map((todo) =>
+      todo.id === id ? { ...todo, text: editedText } : todo
     );
     setTodos(updatedTodos);
   };
@@ -90,7 +99,7 @@ export const Todo = () => {
 
               <Buttonlist>
                 <Button1>하나</Button1>
-                <Button2>두울</Button2>
+                <Todore todo={todo} onEdit={handleEditTodo} />
                 <Tododelete index={todo.id} onDelete={handleDelete} />
               </Buttonlist>
             </Box>
