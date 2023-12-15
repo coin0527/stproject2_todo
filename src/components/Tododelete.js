@@ -1,7 +1,16 @@
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 export const Tododelete = ({ index, onDelete }) => {
   const handleDelete = () => {
     onDelete(index);
   };
 
-  return <button onClick={handleDelete}> 삭제 </button>;
+  return (
+    <FontAwesomeIcon
+      icon={faXmark}
+      onClick={handleDelete}
+      style={{ fontSize: "20px", cursor: "pointer", marginLeft: "15px" }}
+    />
+  );
 };

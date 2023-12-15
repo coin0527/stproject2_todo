@@ -1,3 +1,5 @@
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -25,8 +27,6 @@ const ItemWrap = styled.ul`
     line-height: 50px;
   }
 `;
-const Item1 = styled.li``;
-const Item2 = styled.li``;
 
 export const Header = () => {
   return (
@@ -36,8 +36,17 @@ export const Header = () => {
       </Link>
 
       <ItemWrap>
-        <Item1> one </Item1>
-        <Item2> two </Item2>
+        <Link to={"/"}>
+          <FontAwesomeIcon
+            icon={faUser}
+            style={{
+              fontSize: "24px",
+              marginLeft: "100px",
+              marginTop: "15px",
+              cursor: "pointer",
+            }}
+          />
+        </Link>
       </ItemWrap>
     </Wrap>
   );

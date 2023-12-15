@@ -1,12 +1,6 @@
+import { faSquareCheck } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import styled from "styled-components";
-
-const SelectAll = styled.button`
-  margin-top: 10px;
-  @media screen and (max-width: 500px) {
-    margin-top: 15px;
-  }
-`;
 
 const TodoCheckAll = ({ todos, setTodos }) => {
   const handleSelectAll = () => {
@@ -18,7 +12,18 @@ const TodoCheckAll = ({ todos, setTodos }) => {
     setTodos(updatedTodos);
   };
 
-  return <SelectAll onClick={handleSelectAll}>전체선택</SelectAll>;
+  return (
+    <FontAwesomeIcon
+      icon={faSquareCheck}
+      onClick={handleSelectAll}
+      style={{
+        fontSize: "30px",
+        marginTop: "5px",
+        marginLeft: "30px",
+        cursor: "pointer",
+      }}
+    />
+  );
 };
 
 export default TodoCheckAll;

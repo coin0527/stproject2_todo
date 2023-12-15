@@ -11,15 +11,22 @@ import {
   Container,
   Footer,
   RightMenu,
-  Complete,
   Box,
   SContainer,
   Todolist,
   Buttonlist,
-  Button1,
-  Delete,
+  Line,
+  Containter2,
 } from "./TodoStyle";
 import { Todore } from "../components/Todore";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCheck,
+  faEraser,
+  faPencil,
+  faShare,
+} from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 export const Todo = () => {
   const [todos, setTodos] = useState([]);
@@ -68,17 +75,33 @@ export const Todo = () => {
   return (
     <Wrap>
       <InputWrap>
+        <FontAwesomeIcon
+          icon={faPencil}
+          style={{ fontSize: "24px", lineHeight: "50px" }}
+        />
         <Form onSubmit={handleSubmit(handleAddTodo)}>
           <Input
             {...register("search", {
               required: "내용을 입력해주세요.",
             })}
             type="text"
-            placeholder="내용입력"
           />
         </Form>
         <Button onClick={handleSubmit(handleAddTodo)}> ADD </Button>
       </InputWrap>
+      <Line />
+      <Containter2>
+        <Link to={"/todos"}>
+          <FontAwesomeIcon
+            icon={faShare}
+            style={{ marginTop: "20px", fontSize: "20px" }}
+          />
+        </Link>
+
+        <h3 style={{ fontSize: "20px", fontWeight: "600", marginTop: "20px" }}>
+          count : {count}
+        </h3>
+      </Containter2>
 
       <Container>
         {todos.length > 0 ? (
@@ -98,7 +121,14 @@ export const Todo = () => {
               </SContainer>
 
               <Buttonlist>
-                <Button1>하나</Button1>
+                <FontAwesomeIcon
+                  icon={faCheck}
+                  style={{
+                    fontSize: "20px",
+                    marginLeft: "15px",
+                    cursor: "pointer",
+                  }}
+                />
                 <Todore todo={todo} onEdit={handleEditTodo} />
                 <Tododelete index={todo.id} onDelete={handleDelete} />
               </Buttonlist>
@@ -109,11 +139,27 @@ export const Todo = () => {
         )}
       </Container>
       <Footer>
-        <h3>count : {count}</h3>
         <RightMenu>
           <TodoCheckAll todos={todos} setTodos={setTodos} />
-          <Complete>완료</Complete>
-          <Delete onClick={handleDeleteChecked}>삭제</Delete>
+          <FontAwesomeIcon
+            icon={faCheck}
+            style={{
+              fontSize: "30px",
+              marginLeft: "30px",
+              marginTop: "5px",
+              cursor: "pointer",
+            }}
+          ></FontAwesomeIcon>
+          <FontAwesomeIcon
+            icon={faEraser}
+            onClick={handleDeleteChecked}
+            style={{
+              fontSize: "30px",
+              marginTop: "5px",
+              marginLeft: "30px",
+              cursor: "pointer",
+            }}
+          ></FontAwesomeIcon>
         </RightMenu>
       </Footer>
     </Wrap>

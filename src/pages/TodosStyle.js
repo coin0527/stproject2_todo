@@ -17,33 +17,6 @@ export const InputWrap = styled.div`
   margin-top: 100px;
 `;
 
-export const Input = styled.input`
-  all: unset;
-  box-sizing: border-box;
-  width: 95%;
-  height: 30px;
-  border: 1px solid black;
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  font-size: 30px;
-  font-weight: 600;
-  letter-spacing: -1px;
-  text-align: center;
-
-  @media screen and (max-width: 500px) {
-    border-radius: 0;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 80%;
-    height: 100px;
-    border: none;
-    background-color: transparent;
-    color: black;
-  }
-`;
-
 export const Button = styled.button`
   all: unset;
   width: 80px;
@@ -107,6 +80,8 @@ export const Footer = styled.div`
   margin: 500px auto;
   padding: 0px 10px 10px 10px;
   box-sizing: border-box;
+  position: relative;
+  top: -10%;
   @media screen and (max-width: 500px) {
     max-width: 100%;
     border: 1px solid black;
@@ -167,12 +142,12 @@ export const Delete = styled.button``;
 export const Line = styled.div`
   border: 1px solid black;
   width: 50%;
-  margin-top: 5px;
   position: relative;
+  top: 100px;
   left: 25%;
 `;
 export const Containter2 = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 0 20%;
+  padding: 9% 20%;
 `;
