@@ -63,14 +63,6 @@ export const Todo = () => {
     setTodos(updatedTodos);
   };
 
-  const handleEditTodo = (id, editedText) => {
-    //모달
-    const updatedTodos = todos.map((todo) =>
-      todo.id === id ? { ...todo, text: editedText } : todo
-    );
-    setTodos(updatedTodos);
-  };
-
   const count = todos.length; // 할일 갯수
   return (
     <Wrap>
@@ -129,7 +121,7 @@ export const Todo = () => {
                     cursor: "pointer",
                   }}
                 />
-                <Todore todo={todo} onEdit={handleEditTodo} />
+                <Todore />
                 <Tododelete index={todo.id} onDelete={handleDelete} />
               </Buttonlist>
             </Box>
