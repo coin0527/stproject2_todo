@@ -35,6 +35,7 @@ export const Todo = () => {
     // input
     mode: "onSubmit",
   });
+
   const handleAddTodo = (data) => {
     // 입력한 값 추가
     setTodos([
@@ -61,6 +62,11 @@ export const Todo = () => {
       todo.id === id ? { ...todo, checked: !todo.checked } : todo
     );
     setTodos(updatedTodos);
+  };
+
+  const handleTodoSuccess = (todo) => {
+    const updatedTodos = todos.filter((t) => t.id !== todo.id);
+    setTodos([...updatedTodos]);
   };
 
   const count = todos.length; // 할일 갯수
@@ -119,6 +125,9 @@ export const Todo = () => {
                     fontSize: "20px",
                     marginLeft: "15px",
                     cursor: "pointer",
+                  }}
+                  onClick={() => {
+                    handleTodoSuccess(todo);
                   }}
                 />
                 <Todore />

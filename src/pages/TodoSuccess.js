@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Tododelete } from "../components/Tododelete";
 import TodoCheckAll from "../components/TodoCheckAll";
 import {
@@ -12,14 +12,46 @@ import {
   Buttonlist,
   Containter2,
   Line,
-} from "./TodosStyle";
+  InputWrap,
+  Form,
+  Input,
+  Button,
+} from "./TodoStyle";
 import { Todore } from "../components/Todore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faEraser, faShare } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import {
+  faCheck,
+  faEraser,
+  faPencil,
+  faShare,
+} from "@fortawesome/free-solid-svg-icons";
+import { Link, useLocation } from "react-router-dom";
+import { useForm } from "react-hook-form";
 export const TodoSuccess = () => {
+  const location = useLocation();
   const [todos, setTodos] = useState([]);
   // 할 일
+
+  useEffect(() => {
+    console.log(todos);
+    if (location.state && location.state.todoInfo) {
+      setTodos((prevTodos) => [location.state.todoInfo, ...prevTodos]);
+    }
+  }, [location.state, todos]);
+
+  const { register, handleSubmit, reset } = useForm({
+    // input
+    mode: "onSubmit",
+  });
+
+  const handleAddTodo = (data) => {
+    // 입력한 값 추가
+    setTodos([
+      ...todos,
+      { id: todos.length + 1, checked: false, text: data.search },
+    ]);
+    reset();
+  };
 
   const handleDelete = (id) => {
     // 삭제
@@ -40,28 +72,25 @@ export const TodoSuccess = () => {
     setTodos(updatedTodos);
   };
 
-  const handleEditTodo = (id, editedText) => {
-    //모달
-    const updatedTodos = todos.map((todo) =>
-      todo.id === id ? { ...todo, text: editedText } : todo
-    );
-    setTodos(updatedTodos);
-  };
-
   const count = todos.length; // 할일 갯수
   return (
     <Wrap>
-      <h2
-        style={{
-          position: "relative",
-          top: "8%",
-          left: "42%",
-          fontSize: "40px",
-          fontWeight: "600",
-        }}
-      >
-        완료목록
-      </h2>
+      여기는 Succ
+      <InputWrap>
+        <FontAwesomeIcon
+          icon={faPencil}
+          style={{ fontSize: "24px", lineHeight: "50px" }}
+        />
+        <Form onSubmit={handleSubmit(handleAddTodo)}>
+          <Input
+            {...register("search", {
+              required: "내용을 입력해주세요.",
+            })}
+            type="text"
+          />
+        </Form>
+        <Button onClick={handleSubmit(handleAddTodo)}> ADD </Button>
+      </InputWrap>
       <Line />
       <Containter2>
         <Link to={"/todo"}>
@@ -75,7 +104,6 @@ export const TodoSuccess = () => {
           count : {count}
         </h3>
       </Containter2>
-
       <Container>
         {todos.length > 0 ? (
           todos.map((todo) => (
@@ -102,7 +130,7 @@ export const TodoSuccess = () => {
                     cursor: "pointer",
                   }}
                 />
-                <Todore todo={todo} onEdit={handleEditTodo} />
+                <Todore />
                 <Tododelete index={todo.id} onDelete={handleDelete} />
               </Buttonlist>
             </Box>
