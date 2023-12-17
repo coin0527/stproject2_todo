@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const Wrap = styled.div``;
 
 const LoginContainer = styled.div`
-  /* width: 100%; */
   max-width: 400px;
   margin: 200px auto;
   padding: 20px;
@@ -82,13 +81,38 @@ const Signupq = styled.div`
   }
 `;
 
+const Container2 = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 export const Login = () => {
+  const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
   };
+
+  const handleLogin = () => {
+    const storedUsernames = JSON.parse(localStorage.getItem("usernames")) || [];
+    const foundUser = storedUsernames.find(
+      (user) => user.username === username && user.password === password
+    );
+
+    if (foundUser) {
+      localStorage.setItem(
+        "loggedInUser",
+        JSON.stringify({ username, password })
+      );
+      navigate("/todo");
+    } else {
+      setErrorMessage("아이디 또는 비밀번호가 잘못되었습니다.");
+    }
+  };
+
   return (
     <Wrap>
       <LoginContainer>
@@ -106,16 +130,27 @@ export const Login = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <div>
-            <label style={{ fontSize: "13px" }}>
-              <input
-                type="checkbox"
-                style={{ marginRight: "10px", marginBottom: "15px" }}
-              />
-              자동로그인
-            </label>
-          </div>
-          <Button type="submit">로그인</Button>
+          <Container2>
+            <div>
+              <label style={{ fontSize: "13px" }}>
+                <input
+                  type="checkbox"
+                  style={{ marginRight: "10px", marginBottom: "15px" }}
+                />
+                자동로그인
+              </label>
+            </div>
+
+            {errorMessage && (
+              <errorMessage style={{ fontSize: "13px", color: "red" }}>
+                {errorMessage}
+              </errorMessage>
+            )}
+          </Container2>
+
+          <Button type="button" onClick={handleLogin}>
+            로그인
+          </Button>
         </Form>
 
         <Separ>

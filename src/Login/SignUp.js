@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const SignupContainer = styled.div`
@@ -43,6 +43,7 @@ const Button = styled.button`
     background-color: #218838;
   }
 `;
+
 const Separ = styled.div`
   width: 100%;
   margin: 30px 0;
@@ -76,19 +77,63 @@ const Signupq = styled.div`
   }
 `;
 
+const Message = styled.div``;
+
 export const SignUp = () => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const [usernames, setUsernames] = useState([]);
+
+  useEffect(() => {
+    const storedUsernames = localStorage.getItem("usernames");
+    console.log("Stored Usernames:", storedUsernames);
+
+    try {
+      const parsedUsernames = JSON.parse(storedUsernames) || [];
+      setUsernames(parsedUsernames);
+    } catch (error) {
+      console.error("Error parsing stored usernames:", error);
+    }
+  }, []);
+
+  const isValidEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+  const isPasswordValid = (password) => {
+    return password.length >= 6;
+  };
+
+  const isUsernameValid = (username) => {
+    return username.length >= 3;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (
+      !isUsernameValid(username) ||
+      !isPasswordValid(password) ||
+      !isValidEmail(email)
+    ) {
+      setMessage("아이디, 비밀번호, 이메일을 모두 올바르게 입력하세요.");
+    } else if (usernames.some((user) => user.username === username)) {
+      setMessage("이미 가입되어있는 ID 입니다.");
+    } else {
+      const updatedUsernames = [...usernames, { username, password, email }];
+      setUsernames(updatedUsernames);
+      localStorage.setItem("usernames", JSON.stringify(updatedUsernames));
+      navigate("/");
+    }
   };
 
   return (
     <SignupContainer>
       <Title>Sign Up</Title>
-      <Form onSubmit={handleSubmit}>
+      <Form>
         <Input
           type="text"
           placeholder="Username"
@@ -102,19 +147,26 @@ export const SignUp = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
         <Input
-          type="password"
-          placeholder="RPassword"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <Input
           type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
 
-        <Button type="submit">Sign Up</Button>
+        {message && (
+          <Message
+            style={{
+              fontSize: "13px",
+              color: message.includes("사용 가능한 ID") ? "green" : "red",
+              marginBottom: "10px",
+            }}
+          >
+            {message}
+          </Message>
+        )}
+        <Button type="button" onClick={handleSubmit}>
+          Sign Up
+        </Button>
       </Form>
       <Separ>
         <span></span>
