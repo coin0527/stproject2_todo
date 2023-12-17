@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { Tododelete } from "../components/Tododelete";
 import TodoCheckAll from "../components/TodoCheckAll";
@@ -20,56 +20,102 @@ import {
 } from "./TodoStyle";
 import { Todore } from "../components/Todore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCheck,
-  faEraser,
-  faPencil,
-  faShare,
-} from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { faEraser, faPencil, faShare } from "@fortawesome/free-solid-svg-icons";
+import { Link, useNavigate } from "react-router-dom";
+import TodoCheck from "../components/TodoCheck";
 
 export const Todo = () => {
+  const navigate = useNavigate();
   const [todos, setTodos] = useState([]);
-  // 할 일
+
+  // 할 일 목록을 로컬 스토리지에서 불러오는 함수
+  const loadTodosFromLocalStorage = () => {
+    const storedTodos = JSON.parse(localStorage.getItem("todos")) || [];
+    setTodos(storedTodos);
+  };
+
+  useEffect(() => {
+    loadTodosFromLocalStorage();
+  }, []); // 컴포넌트가 마운트될 때 한 번만 실행
+
+  // 할 일 추가
   const { register, handleSubmit, reset } = useForm({
-    // input
     mode: "onSubmit",
   });
 
   const handleAddTodo = (data) => {
-    // 입력한 값 추가
-    setTodos([
-      ...todos,
-      { id: todos.length + 1, checked: false, text: data.search },
-    ]);
+    const newTodo = { id: todos.length + 1, checked: false, text: data.search };
+
+    // 이전 할 일 목록에 새로운 할 일을 추가하고, 상태를 업데이트
+    setTodos((prevTodos) => {
+      const updatedTodos = [...prevTodos, newTodo];
+
+      // 로컬 스토리지에 업데이트된 할 일 목록을 저장
+      localStorage.setItem("todos", JSON.stringify(updatedTodos));
+
+      return updatedTodos;
+    });
+
     reset();
   };
 
+  // 할 일 삭제
   const handleDelete = (id) => {
-    // 삭제
     const updatedTodos = todos.filter((todo) => todo.id !== id);
     setTodos(updatedTodos);
-  };
-  const handleDeleteChecked = () => {
-    // 체크된거 삭제
-    const updatedTodos = todos.filter((todo) => !todo.checked);
-    setTodos(updatedTodos);
+    localStorage.setItem("todos", JSON.stringify(updatedTodos));
   };
 
+  // 체크된 할 일 삭제
+  const handleDeleteChecked = () => {
+    const updatedTodos = todos.filter((todo) => !todo.checked);
+    setTodos(updatedTodos);
+    localStorage.setItem("todos", JSON.stringify(updatedTodos));
+  };
+
+  // 체크박스 변경
   const handleCheckboxChange = (id) => {
-    // 체크
+    // 할 일 목록을 가져오기
     const updatedTodos = todos.map((todo) =>
       todo.id === id ? { ...todo, checked: !todo.checked } : todo
     );
-    setTodos(updatedTodos);
+
+    // 로컬 스토리지와 상태를 업데이트
+    updateLocalStorageAndState(updatedTodos);
   };
 
   const handleTodoSuccess = (todo) => {
+    // 할 일 목록에서 완료된 할 일 삭제
     const updatedTodos = todos.filter((t) => t.id !== todo.id);
-    setTodos([...updatedTodos]);
+
+    // 로컬 스토리지와 상태를 업데이트
+    updateLocalStorageAndState(updatedTodos);
+
+    // TodoSuccess.js로 정보 전달
+    const todoInfo = { id: todo.id, checked: todo.checked, text: todo.text };
+    navigate("/todos", { state: { todoInfo } });
   };
 
-  const count = todos.length; // 할일 갯수
+  const updateLocalStorageAndState = (updatedTodos) => {
+    // 로컬 스토리지에 업데이트된 할 일 목록을 저장
+    localStorage.setItem("todos", JSON.stringify(updatedTodos));
+
+    // 상태를 변경
+    setTodos(updatedTodos);
+  };
+
+  const setTodosCallback = useCallback(
+    (updatedTodos) => {
+      // 로컬 스토리지에 업데이트된 할 일 목록을 저장
+      localStorage.setItem("todos", JSON.stringify(updatedTodos));
+      // 상태를 변경
+      setTodos(updatedTodos);
+    },
+    [setTodos]
+  );
+
+  const count = todos.length;
+
   return (
     <Wrap>
       <InputWrap>
@@ -119,17 +165,7 @@ export const Todo = () => {
               </SContainer>
 
               <Buttonlist>
-                <FontAwesomeIcon
-                  icon={faCheck}
-                  style={{
-                    fontSize: "20px",
-                    marginLeft: "15px",
-                    cursor: "pointer",
-                  }}
-                  onClick={() => {
-                    handleTodoSuccess(todo);
-                  }}
-                />
+                <TodoCheck todo={todo} onTodoSuccess={handleTodoSuccess} />
                 <Todore />
                 <Tododelete index={todo.id} onDelete={handleDelete} />
               </Buttonlist>
@@ -141,16 +177,8 @@ export const Todo = () => {
       </Container>
       <Footer>
         <RightMenu>
-          <TodoCheckAll todos={todos} setTodos={setTodos} />
-          <FontAwesomeIcon
-            icon={faCheck}
-            style={{
-              fontSize: "30px",
-              marginLeft: "30px",
-              marginTop: "5px",
-              cursor: "pointer",
-            }}
-          ></FontAwesomeIcon>
+          <TodoCheckAll todos={todos} setTodos={setTodosCallback} />
+          <TodoCheck completedTodos={todos.filter((todo) => todo.checked)} />
           <FontAwesomeIcon
             icon={faEraser}
             onClick={handleDeleteChecked}

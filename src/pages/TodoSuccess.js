@@ -27,10 +27,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Link, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import TodoCheck from "../components/TodoCheck"; // 추가
+
 export const TodoSuccess = () => {
   const location = useLocation();
   const [todos, setTodos] = useState([]);
-  // 할 일
 
   useEffect(() => {
     console.log(todos);
@@ -40,12 +41,10 @@ export const TodoSuccess = () => {
   }, [location.state, todos]);
 
   const { register, handleSubmit, reset } = useForm({
-    // input
     mode: "onSubmit",
   });
 
   const handleAddTodo = (data) => {
-    // 입력한 값 추가
     setTodos([
       ...todos,
       { id: todos.length + 1, checked: false, text: data.search },
@@ -54,28 +53,26 @@ export const TodoSuccess = () => {
   };
 
   const handleDelete = (id) => {
-    // 삭제
     const updatedTodos = todos.filter((todo) => todo.id !== id);
     setTodos(updatedTodos);
   };
+
   const handleDeleteChecked = () => {
-    // 체크된거 삭제
     const updatedTodos = todos.filter((todo) => !todo.checked);
     setTodos(updatedTodos);
   };
 
   const handleCheckboxChange = (id) => {
-    // 체크
     const updatedTodos = todos.map((todo) =>
       todo.id === id ? { ...todo, checked: !todo.checked } : todo
     );
     setTodos(updatedTodos);
   };
 
-  const count = todos.length; // 할일 갯수
+  const count = todos.length;
+
   return (
     <Wrap>
-      여기는 Succ
       <InputWrap>
         <FontAwesomeIcon
           icon={faPencil}
@@ -117,7 +114,6 @@ export const TodoSuccess = () => {
                     onChange={() => handleCheckboxChange(todo.id)}
                   />
                 </div>
-
                 <Todolist>{todo.text}</Todolist>
               </SContainer>
 
@@ -141,6 +137,7 @@ export const TodoSuccess = () => {
       </Container>
       <Footer>
         <RightMenu>
+          <TodoCheck completedTodos={todos.filter((todo) => todo.checked)} />
           <TodoCheckAll todos={todos} setTodos={setTodos} />
           <FontAwesomeIcon
             icon={faCheck}
