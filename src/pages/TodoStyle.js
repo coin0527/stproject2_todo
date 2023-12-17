@@ -15,6 +15,11 @@ export const InputWrap = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 100px;
+  h3 {
+    font-size: 30px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
 `;
 
 export const Input = styled.input`
@@ -98,7 +103,7 @@ export const Container = styled.div`
     width: 100%;
     height: 100%;
     max-height: 650px;
-    top: 10%;
+    top: 15%;
   }
 `;
 
@@ -170,9 +175,17 @@ export const Line = styled.div`
   margin-top: 5px;
   position: relative;
   left: 25%;
+
+  @media screen and (max-width: 500px) {
+    display: none;
+  }
 `;
 export const Containter2 = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 0 20%;
+  @media screen and (max-width: 500px) {
+    padding: 1%;
+    margin-top: -100px;
+  }
 `;

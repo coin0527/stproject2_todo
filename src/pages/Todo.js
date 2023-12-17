@@ -45,12 +45,8 @@ export const Todo = () => {
 
   const handleAddTodo = (data) => {
     const newTodo = { id: todos.length + 1, checked: false, text: data.search };
-
-    // 이전 할 일 목록에 새로운 할 일을 추가하고, 상태를 업데이트
     setTodos((prevTodos) => {
       const updatedTodos = [...prevTodos, newTodo];
-
-      // 로컬 스토리지에 업데이트된 할 일 목록을 저장
       localStorage.setItem("todos", JSON.stringify(updatedTodos));
 
       return updatedTodos;
@@ -85,22 +81,17 @@ export const Todo = () => {
   };
 
   const handleTodoSuccess = (todo) => {
-    // 할 일 목록에서 완료된 할 일 삭제
     const updatedTodos = todos.filter((t) => t.id !== todo.id);
 
-    // 로컬 스토리지와 상태를 업데이트
     updateLocalStorageAndState(updatedTodos);
 
-    // TodoSuccess.js로 정보 전달
-    const todoInfo = { id: todo.id, checked: todo.checked, text: todo.text };
-    navigate("/todos", { state: { todoInfo } });
+    // const todoInfo = { id: todo.id, checked: todo.checked, text: todo.text };
+    // navigate("/todos", { state: { todoInfo } });
   };
 
   const updateLocalStorageAndState = (updatedTodos) => {
-    // 로컬 스토리지에 업데이트된 할 일 목록을 저장
     localStorage.setItem("todos", JSON.stringify(updatedTodos));
 
-    // 상태를 변경
     setTodos(updatedTodos);
   };
 
@@ -121,7 +112,13 @@ export const Todo = () => {
       <InputWrap>
         <FontAwesomeIcon
           icon={faPencil}
-          style={{ fontSize: "24px", lineHeight: "50px" }}
+          style={{
+            fontSize: "24px",
+            lineHeight: "50px",
+            "@media (max-width: 600px)": {
+              display: "none",
+            },
+          }}
         />
         <Form onSubmit={handleSubmit(handleAddTodo)}>
           <Input

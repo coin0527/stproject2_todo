@@ -15,6 +15,44 @@ export const InputWrap = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 100px;
+  h3 {
+    font-size: 30px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  @media screen and (max-width: 500px) {
+    margin-top: 30px;
+    h3 {
+      font-size: 40px;
+    }
+  }
+`;
+
+export const Input = styled.input`
+  all: unset;
+  box-sizing: border-box;
+  width: 95%;
+  height: 30px;
+  border: 1px solid black;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: -1px;
+  text-align: center;
+
+  @media screen and (max-width: 500px) {
+    border-radius: 0;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 80%;
+    height: 100px;
+    border: none;
+    background-color: transparent;
+    color: black;
+  }
 `;
 
 export const Button = styled.button`
@@ -71,7 +109,7 @@ export const Container = styled.div`
     width: 100%;
     height: 100%;
     max-height: 650px;
-    top: 10%;
+    top: 20%;
   }
 `;
 
@@ -80,15 +118,8 @@ export const Footer = styled.div`
   margin: 500px auto;
   padding: 0px 10px 10px 10px;
   box-sizing: border-box;
-  position: relative;
-  top: -10%;
   @media screen and (max-width: 500px) {
-    max-width: 100%;
-    border: 1px solid black;
-    margin: 0;
-    position: absolute;
-    bottom: 100px;
-    right: 0;
+    display: none;
   }
 `;
 
@@ -142,12 +173,19 @@ export const Delete = styled.button``;
 export const Line = styled.div`
   border: 1px solid black;
   width: 50%;
+  margin-top: 5px;
   position: relative;
-  top: 100px;
   left: 25%;
+  @media screen and (max-width: 500px) {
+    display: none;
+  }
 `;
 export const Containter2 = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 9% 20%;
+  padding: 0 20%;
+
+  @media screen and (max-width: 500px) {
+    padding: 2%;
+  }
 `;
