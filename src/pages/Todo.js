@@ -94,10 +94,6 @@ export const Todo = () => {
     updateLocalStorageAndState(updatedTodos);
   };
 
-  const handleCheckTodos = (text) => {
-    navigate("/Todos", { state: { todos: [{ text }] } });
-  };
-
   const count = todos.length;
 
   return (
