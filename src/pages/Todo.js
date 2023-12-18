@@ -18,12 +18,12 @@ import {
   Buttonlist,
   Line,
   Containter2,
-} from "./TodoStyle";
+} from "../style/TodoStyle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEraser, faPencil, faShare } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
 import TodoCheck from "../components/TodoCheck";
-import "../style/style.css";
+import "../style/TodoStyle";
 
 export const Todo = () => {
   const [todos, setTodos] = useState([]);

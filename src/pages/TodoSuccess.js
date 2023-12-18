@@ -12,7 +12,7 @@ import {
   InputWrap,
   Footer,
   RightMenu,
-} from "./TodosStyle";
+} from "../style/TodosStyle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEraser, faShare } from "@fortawesome/free-solid-svg-icons";
 import { Link, useLocation } from "react-router-dom";
