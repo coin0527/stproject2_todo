@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { faPenToSquare, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import "../style/style.css"; // 여기서 필요한 스타일 파일을 불러옵니다.
+import "../style/style.css";
 
 const Todore = ({ onEdit }) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [modalInputValue, setModalInputValue] = useState("");
 
   const handleEditClick = () => {
-    setModalInputValue(/* 현재 Todo의 내용 가져오는 로직 추가 */);
+    setModalInputValue;
     setModalOpen(true);
   };
 
@@ -31,7 +31,6 @@ const Todore = ({ onEdit }) => {
         onClick={handleEditClick}
       />
 
-      {/* 모달 컴포넌트 */}
       {isModalOpen && (
         <div className="modal">
           <div className="modal-content">
