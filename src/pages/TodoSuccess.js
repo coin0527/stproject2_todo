@@ -15,16 +15,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShare } from "@fortawesome/free-solid-svg-icons";
 import { Link, useLocation } from "react-router-dom";
 
-export const TodoSuccess = () => {
+export const TodoSuccess = ({ completedTodos }) => {
   const location = useLocation();
   const [todos, setTodos] = useState([]);
 
   useEffect(() => {
-    console.log(todos);
     if (location.state && location.state.todoInfo) {
       setTodos((prevTodos) => [location.state.todoInfo, ...prevTodos]);
     }
-  }, [location.state, todos]);
+  }, [location.state]);
 
   const handleDelete = (id) => {
     const updatedTodos = todos.filter((todo) => todo.id !== id);
@@ -53,14 +52,13 @@ export const TodoSuccess = () => {
             style={{ marginTop: "20px", fontSize: "20px" }}
           />
         </Link>
-
         <h3 style={{ fontSize: "20px", fontWeight: "600", marginTop: "20px" }}>
           count : {count}
         </h3>
       </Containter2>
       <Container>
-        {todos.length > 0 ? (
-          todos.map((todo) => (
+        {completedTodos.length > 0 ? (
+          completedTodos.map((todo) => (
             <Box key={todo.id}>
               <SContainer>
                 <div>
@@ -73,7 +71,6 @@ export const TodoSuccess = () => {
                 </div>
                 <Todolist>{todo.text}</Todolist>
               </SContainer>
-
               <Buttonlist>
                 <Tododelete index={todo.id} onDelete={handleDelete} />
               </Buttonlist>

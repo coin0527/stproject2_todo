@@ -15,6 +15,7 @@ const TodoCheck = ({ todo, onTodoSuccess }) => {
         fontSize: "20px",
         marginLeft: "15px",
         cursor: "pointer",
+        color: "green",
       }}
       onClick={handleCheck}
     />

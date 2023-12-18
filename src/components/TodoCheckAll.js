@@ -1,6 +1,5 @@
 import React, { useCallback } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSquare } from "@fortawesome/free-regular-svg-icons";
 import { faCheckSquare as faCheckSquareSolid } from "@fortawesome/free-solid-svg-icons";
 
 const TodoCheckAll = ({ todos, setTodos }) => {
@@ -22,11 +21,12 @@ const TodoCheckAll = ({ todos, setTodos }) => {
 
   return (
     <FontAwesomeIcon
-      icon={allChecked ? faCheckSquareSolid : faSquare}
+      icon={allChecked ? faCheckSquareSolid : faCheckSquareSolid}
       style={{
         fontSize: "30px",
         marginRight: "10px",
         cursor: "pointer",
+        color: "skyblue",
       }}
       onClick={handleCheckAll}
     />

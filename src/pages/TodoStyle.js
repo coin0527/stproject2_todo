@@ -20,6 +20,9 @@ export const InputWrap = styled.div`
     font-weight: 600;
     margin-bottom: 10px;
   }
+  /* .pencil-icon {
+    display: none;
+  } */
 `;
 
 export const Input = styled.input`
@@ -113,12 +116,11 @@ export const Footer = styled.div`
   padding: 0px 10px 10px 10px;
   box-sizing: border-box;
   @media screen and (max-width: 500px) {
-    max-width: 100%;
-    border: 1px solid black;
+    max-width: 50%;
     margin: 0;
     position: absolute;
     bottom: 100px;
-    right: 0;
+    left: 150px;
   }
 `;
 
@@ -186,6 +188,6 @@ export const Containter2 = styled.div`
   padding: 0 20%;
   @media screen and (max-width: 500px) {
     padding: 1%;
-    margin-top: -100px;
+    margin-top: -60px;
   }
 `;

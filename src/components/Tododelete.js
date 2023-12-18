@@ -10,7 +10,12 @@ export const Tododelete = ({ index, onDelete }) => {
     <FontAwesomeIcon
       icon={faXmark}
       onClick={handleDelete}
-      style={{ fontSize: "20px", cursor: "pointer", marginLeft: "15px" }}
+      style={{
+        fontSize: "20px",
+        cursor: "pointer",
+        marginLeft: "15px",
+        color: "crimson",
+      }}
     />
   );
 };

@@ -1,7 +1,8 @@
-import { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { Tododelete } from "../components/Tododelete";
 import TodoCheckAll from "../components/TodoCheckAll";
+import Todore from "../components/Todore";
 import {
   Wrap,
   Form,
@@ -18,14 +19,13 @@ import {
   Line,
   Containter2,
 } from "./TodoStyle";
-import { Todore } from "../components/Todore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEraser, faPencil, faShare } from "@fortawesome/free-solid-svg-icons";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import TodoCheck from "../components/TodoCheck";
+import "../style/style.css";
 
 export const Todo = () => {
-  const navigate = useNavigate();
   const [todos, setTodos] = useState([]);
 
   // 할 일 목록을 로컬 스토리지에서 불러오는 함수
@@ -36,7 +36,7 @@ export const Todo = () => {
 
   useEffect(() => {
     loadTodosFromLocalStorage();
-  }, []); // 컴포넌트가 마운트될 때 한 번만 실행
+  }, []);
 
   // 할 일 추가
   const { register, handleSubmit, reset } = useForm({
@@ -48,62 +48,50 @@ export const Todo = () => {
     setTodos((prevTodos) => {
       const updatedTodos = [...prevTodos, newTodo];
       localStorage.setItem("todos", JSON.stringify(updatedTodos));
-
       return updatedTodos;
     });
-
     reset();
   };
 
-  // 할 일 삭제
   const handleDelete = (id) => {
     const updatedTodos = todos.filter((todo) => todo.id !== id);
     setTodos(updatedTodos);
     localStorage.setItem("todos", JSON.stringify(updatedTodos));
   };
 
-  // 체크된 할 일 삭제
+  const handleCheckboxChange = (id) => {
+    const updatedTodos = todos.map((todo) =>
+      todo.id === id ? { ...todo, checked: !todo.checked } : todo
+    );
+    setTodos(updatedTodos);
+    localStorage.setItem("todos", JSON.stringify(updatedTodos));
+  };
+
   const handleDeleteChecked = () => {
     const updatedTodos = todos.filter((todo) => !todo.checked);
     setTodos(updatedTodos);
     localStorage.setItem("todos", JSON.stringify(updatedTodos));
   };
 
-  // 체크박스 변경
-  const handleCheckboxChange = (id) => {
-    // 할 일 목록을 가져오기
-    const updatedTodos = todos.map((todo) =>
-      todo.id === id ? { ...todo, checked: !todo.checked } : todo
-    );
-
-    // 로컬 스토리지와 상태를 업데이트
-    updateLocalStorageAndState(updatedTodos);
-  };
-
-  const handleTodoSuccess = (todo) => {
-    const updatedTodos = todos.filter((t) => t.id !== todo.id);
-
-    updateLocalStorageAndState(updatedTodos);
-
-    // const todoInfo = { id: todo.id, checked: todo.checked, text: todo.text };
-    // navigate("/todos", { state: { todoInfo } });
-  };
-
-  const updateLocalStorageAndState = (updatedTodos) => {
-    localStorage.setItem("todos", JSON.stringify(updatedTodos));
-
-    setTodos(updatedTodos);
-  };
-
   const setTodosCallback = useCallback(
     (updatedTodos) => {
-      // 로컬 스토리지에 업데이트된 할 일 목록을 저장
       localStorage.setItem("todos", JSON.stringify(updatedTodos));
-      // 상태를 변경
       setTodos(updatedTodos);
     },
     [setTodos]
   );
+
+  const updateLocalStorageAndState = (updatedTodos) => {
+    localStorage.setItem("todos", JSON.stringify(updatedTodos));
+    setTodos(updatedTodos);
+  };
+
+  const handleEdit = (id, newText) => {
+    const updatedTodos = todos.map((todo) =>
+      todo.id === id ? { ...todo, text: newText } : todo
+    );
+    updateLocalStorageAndState(updatedTodos);
+  };
 
   const count = todos.length;
 
@@ -115,9 +103,6 @@ export const Todo = () => {
           style={{
             fontSize: "24px",
             lineHeight: "50px",
-            "@media (max-width: 600px)": {
-              display: "none",
-            },
           }}
         />
         <Form onSubmit={handleSubmit(handleAddTodo)}>
@@ -162,8 +147,8 @@ export const Todo = () => {
               </SContainer>
 
               <Buttonlist>
-                <TodoCheck todo={todo} onTodoSuccess={handleTodoSuccess} />
-                <Todore />
+                <TodoCheck />
+                <Todore onEdit={(newText) => handleEdit(todo.id, newText)} />
                 <Tododelete index={todo.id} onDelete={handleDelete} />
               </Buttonlist>
             </Box>
@@ -180,10 +165,10 @@ export const Todo = () => {
             icon={faEraser}
             onClick={handleDeleteChecked}
             style={{
-              fontSize: "30px",
-              marginTop: "5px",
-              marginLeft: "30px",
+              fontSize: "25px",
+              marginLeft: "25px",
               cursor: "pointer",
+              color: "crimson",
             }}
           ></FontAwesomeIcon>
         </RightMenu>
