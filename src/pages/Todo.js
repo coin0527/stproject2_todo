@@ -98,7 +98,7 @@ export const Todo = () => {
     const updatedTodos = todos.filter((todo) => todo.text !== text);
     localStorage.setItem("todos", JSON.stringify(updatedTodos));
     setTodos(updatedTodos);
-    navigate("/Todos", { state: { todoInfo: { text } } });
+    navigate("/Todos", { state: { todoInfo: [{ text }] } });
   };
 
   const count = todos.length;
@@ -119,6 +119,7 @@ export const Todo = () => {
               required: "내용을 입력해주세요.",
             })}
             type="text"
+            defaultValue="" // 초기값 설정
           />
         </Form>
         <Button onClick={handleSubmit(handleAddTodo)}> ADD </Button>
@@ -138,6 +139,23 @@ export const Todo = () => {
       </Containter2>
 
       <Container>
+        <Footer>
+          <TodoCheckAll todos={todos} setTodos={setTodosCallback} />
+          <RightMenu>
+            <TodoCheck completedTodos={todos.filter((todo) => todo.checked)} />
+            <FontAwesomeIcon
+              icon={faEraser}
+              onClick={handleDeleteChecked}
+              style={{
+                fontSize: "25px",
+                marginLeft: "25px",
+                cursor: "pointer",
+                color: "crimson",
+              }}
+            />
+          </RightMenu>
+        </Footer>
+
         {todos.length > 0 ? (
           todos.map((todo) => (
             <Box key={todo.id}>
@@ -165,22 +183,6 @@ export const Todo = () => {
           <p>오늘의 할 일을 추가해주세요!!</p>
         )}
       </Container>
-      <Footer>
-        <RightMenu>
-          <TodoCheckAll todos={todos} setTodos={setTodosCallback} />
-          <TodoCheck completedTodos={todos.filter((todo) => todo.checked)} />
-          <FontAwesomeIcon
-            icon={faEraser}
-            onClick={handleDeleteChecked}
-            style={{
-              fontSize: "25px",
-              marginLeft: "25px",
-              cursor: "pointer",
-              color: "crimson",
-            }}
-          ></FontAwesomeIcon>
-        </RightMenu>
-      </Footer>
     </Wrap>
   );
 };

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Tododelete } from "../components/Tododelete";
 import {
   Wrap,
@@ -10,16 +10,17 @@ import {
   Containter2,
   Line,
   InputWrap,
+  Footer,
+  RightMenu,
 } from "./TodosStyle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShare } from "@fortawesome/free-solid-svg-icons";
+import { faEraser, faShare } from "@fortawesome/free-solid-svg-icons";
 import { Link, useLocation } from "react-router-dom";
+import TodoCheckAll from "../components/TodoCheckAll";
 
 export const TodoSuccess = () => {
   const location = useLocation();
   const [todos, setTodos] = useState([]);
-
-  console.log(location.state);
 
   useEffect(() => {
     if (location.state && location.state.todoInfo) {
@@ -48,6 +49,20 @@ export const TodoSuccess = () => {
     setTodos(updatedTodos);
   };
 
+  const setTodosCallback = useCallback(
+    (updatedTodos) => {
+      localStorage.setItem("todos", JSON.stringify(updatedTodos));
+      setTodos(updatedTodos);
+    },
+    [setTodos]
+  );
+
+  const handleDeleteChecked = () => {
+    const updatedTodos = todos.filter((todo) => !todo.checked);
+    setTodos(updatedTodos);
+    localStorage.setItem("todos", JSON.stringify(updatedTodos));
+  };
+
   const count = todos.length;
 
   return (
@@ -69,6 +84,22 @@ export const TodoSuccess = () => {
         </h3>
       </Containter2>
       <Container>
+        <Footer>
+          <TodoCheckAll todos={todos} setTodos={setTodosCallback} />
+          <RightMenu>
+            <FontAwesomeIcon
+              icon={faEraser}
+              onClick={handleDeleteChecked}
+              style={{
+                fontSize: "25px",
+                marginLeft: "25px",
+                cursor: "pointer",
+                color: "crimson",
+              }}
+            />
+          </RightMenu>
+        </Footer>
+
         {todos.length > 0 ? (
           todos.map((todo) => (
             <Box key={todo.id}>

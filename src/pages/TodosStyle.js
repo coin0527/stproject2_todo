@@ -114,27 +114,17 @@ export const Container = styled.div`
 `;
 
 export const Footer = styled.div`
-  width: 100%;
-  margin: 500px auto;
-  padding: 0px 10px 10px 10px;
-  box-sizing: border-box;
-  @media screen and (max-width: 500px) {
-    display: none;
-  }
-`;
-
-export const RightMenu = styled.ul`
-  width: 100%;
-  max-width: 100%;
   display: flex;
-  justify-content: right;
-  align-items: center;
-  padding: 0 20%;
-
-  @media screen and (max-width: 500px) {
-    max-width: 200px;
-  }
+  justify-content: space-between;
+  padding: 0 1%;
+  border: 1px solid black;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  margin-bottom: 10px;
 `;
+
+export const RightMenu = styled.ul``;
 
 export const Complete = styled.button`
   margin-top: 10px;
