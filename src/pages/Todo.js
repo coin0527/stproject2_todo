@@ -94,6 +94,13 @@ export const Todo = () => {
     updateLocalStorageAndState(updatedTodos);
   };
 
+  const handleCheckTodos = (text) => {
+    const updatedTodos = todos.filter((todo) => todo.text !== text);
+    localStorage.setItem("todos", JSON.stringify(updatedTodos));
+    setTodos(updatedTodos);
+    navigate("/Todos", { state: { todoInfo: { text } } });
+  };
+
   const count = todos.length;
 
   return (
@@ -148,13 +155,7 @@ export const Todo = () => {
               </SContainer>
 
               <Buttonlist>
-                <TodoCheck
-                  onTodoSuccess={() => {
-                    navigate("/Todos", {
-                      state: { todos: [{ text: todo.text }] },
-                    });
-                  }}
-                />
+                <TodoCheck onTodoSuccess={() => handleCheckTodos(todo.text)} />
                 <Todore onEdit={(newText) => handleEdit(todo.id, newText)} />
                 <Tododelete index={todo.id} onDelete={handleDelete} />
               </Buttonlist>

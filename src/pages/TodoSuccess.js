@@ -23,7 +23,17 @@ export const TodoSuccess = () => {
 
   useEffect(() => {
     if (location.state && location.state.todoInfo) {
-      setTodos((prevTodos) => [...location.state.todoInfo, ...prevTodos]);
+      const todosArray = Array.isArray(location.state.todoInfo)
+        ? location.state.todoInfo
+        : [location.state.todoInfo];
+
+      // 중복 추가 방지
+      setTodos((prevTodos) => {
+        const newTodos = todosArray.filter(
+          (newTodo) => !prevTodos.some((prevTodo) => prevTodo.id === newTodo.id)
+        );
+        return [...newTodos, ...prevTodos];
+      });
     }
   }, [location.state]);
 
