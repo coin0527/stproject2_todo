@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Tododelete } from "../components/Tododelete";
 import {
   Wrap,
@@ -21,8 +21,21 @@ import TodoCheckAll from "../components/TodoCheckAll";
 export const TodoSuccess = () => {
   const location = useLocation();
   const [todos, setTodos] = useState([]);
+  const [completedTodos, setCompletedTodos] = useState([]); // completedTodos를 밖에서 정의
 
   useEffect(() => {
+    // Load todos from local storage when the component mounts
+    const storedTodos = JSON.parse(localStorage.getItem("todos")) || [];
+    setTodos(storedTodos);
+
+    // Load completedTodos from local storage
+    const storedCompletedTodos =
+      JSON.parse(localStorage.getItem("completedTodos")) || [];
+    setCompletedTodos(storedCompletedTodos);
+  }, []);
+
+  useEffect(() => {
+    // Update todos when the location state changes (when navigating from Todo.js)
     if (location.state && location.state.todoInfo) {
       const todosArray = Array.isArray(location.state.todoInfo)
         ? location.state.todoInfo
@@ -40,27 +53,39 @@ export const TodoSuccess = () => {
   const handleDelete = (id) => {
     const updatedTodos = todos.filter((todo) => todo.id !== id);
     setTodos(updatedTodos);
+    setCompletedTodos(updatedTodos.filter((todo) => todo.checked));
+    localStorage.setItem("todos", JSON.stringify(updatedTodos));
+    localStorage.setItem(
+      "completedTodos",
+      JSON.stringify(updatedTodos.filter((todo) => todo.checked))
+    );
   };
 
   const handleCheckboxChange = (id) => {
-    const updatedTodos = todos.map((todo) =>
-      todo.id === id ? { ...todo, checked: !todo.checked } : todo
-    );
-    setTodos(updatedTodos);
-  };
+    setTodos((prevTodos) => {
+      const updatedTodos = prevTodos.map((todo) =>
+        todo.id === id ? { ...todo, checked: !todo.checked } : todo
+      );
 
-  const setTodosCallback = useCallback(
-    (updatedTodos) => {
+      // Update completedTodos when todos change
+      setCompletedTodos(updatedTodos.filter((todo) => todo.checked));
+
       localStorage.setItem("todos", JSON.stringify(updatedTodos));
-      setTodos(updatedTodos);
-    },
-    [setTodos]
-  );
+      localStorage.setItem(
+        "completedTodos",
+        JSON.stringify(updatedTodos.filter((todo) => todo.checked))
+      );
+
+      return updatedTodos;
+    });
+  };
 
   const handleDeleteChecked = () => {
     const updatedTodos = todos.filter((todo) => !todo.checked);
     setTodos(updatedTodos);
+    setCompletedTodos([]);
     localStorage.setItem("todos", JSON.stringify(updatedTodos));
+    localStorage.setItem("completedTodos", JSON.stringify([]));
   };
 
   const count = todos.length;
@@ -85,7 +110,7 @@ export const TodoSuccess = () => {
       </Containter2>
       <Container>
         <Footer>
-          <TodoCheckAll todos={todos} setTodos={setTodosCallback} />
+          <TodoCheckAll todos={todos} setTodos={setTodos} />
           <RightMenu>
             <FontAwesomeIcon
               icon={faEraser}
@@ -100,8 +125,8 @@ export const TodoSuccess = () => {
           </RightMenu>
         </Footer>
 
-        {todos.length > 0 ? (
-          todos.map((todo) => (
+        {completedTodos.length > 0 ? (
+          completedTodos.map((todo) => (
             <Box key={todo.id}>
               <SContainer>
                 <div>
@@ -116,12 +141,15 @@ export const TodoSuccess = () => {
               </SContainer>
 
               <Buttonlist>
-                <Tododelete index={todo.id} onDelete={handleDelete} />
+                <Tododelete
+                  index={todo.id}
+                  onDelete={() => handleDelete(todo.id)}
+                />
               </Buttonlist>
             </Box>
           ))
         ) : (
-          <p>오늘의 할 일이 끝났습니다!!</p>
+          <p>완료된 할 일이 없습니다.</p>
         )}
       </Container>
     </Wrap>

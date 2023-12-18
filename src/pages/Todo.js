@@ -29,7 +29,6 @@ export const Todo = () => {
   const [todos, setTodos] = useState([]);
   const navigate = useNavigate();
 
-  // 할 일 목록을 로컬 스토리지에서 불러오는 함수
   const loadTodosFromLocalStorage = () => {
     const storedTodos = JSON.parse(localStorage.getItem("todos")) || [];
     setTodos(storedTodos);
@@ -39,7 +38,6 @@ export const Todo = () => {
     loadTodosFromLocalStorage();
   }, []);
 
-  // 할 일 추가
   const { register, handleSubmit, reset } = useForm({
     mode: "onSubmit",
   });
@@ -61,11 +59,13 @@ export const Todo = () => {
   };
 
   const handleCheckboxChange = (id) => {
-    const updatedTodos = todos.map((todo) =>
-      todo.id === id ? { ...todo, checked: !todo.checked } : todo
-    );
-    setTodos(updatedTodos);
-    localStorage.setItem("todos", JSON.stringify(updatedTodos));
+    setTodos((prevTodos) => {
+      const updatedTodos = prevTodos.map((todo) =>
+        todo.id === id ? { ...todo, checked: !todo.checked } : todo
+      );
+      localStorage.setItem("todos", JSON.stringify(updatedTodos));
+      return updatedTodos;
+    });
   };
 
   const handleDeleteChecked = () => {
@@ -94,10 +94,20 @@ export const Todo = () => {
     updateLocalStorageAndState(updatedTodos);
   };
 
-  const handleCheckTodos = (text) => {
-    const updatedTodos = todos.filter((todo) => todo.text !== text);
+  const handleCheckTodos = (id, text) => {
+    const updatedTodos = todos.filter((todo) => todo.id !== id);
     localStorage.setItem("todos", JSON.stringify(updatedTodos));
     setTodos(updatedTodos);
+
+    // Add the completed task to completedTodos
+    const completedTodo = { id, text, checked: true };
+    const completedTodos =
+      JSON.parse(localStorage.getItem("completedTodos")) || [];
+    localStorage.setItem(
+      "completedTodos",
+      JSON.stringify([...completedTodos, completedTodo])
+    );
+
     navigate("/Todos", { state: { todoInfo: [{ text }] } });
   };
 
@@ -173,7 +183,9 @@ export const Todo = () => {
               </SContainer>
 
               <Buttonlist>
-                <TodoCheck onTodoSuccess={() => handleCheckTodos(todo.text)} />
+                <TodoCheck
+                  onTodoSuccess={() => handleCheckTodos(todo.id, todo.text)}
+                />
                 <Todore onEdit={(newText) => handleEdit(todo.id, newText)} />
                 <Tododelete index={todo.id} onDelete={handleDelete} />
               </Buttonlist>
