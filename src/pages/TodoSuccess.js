@@ -27,7 +27,6 @@ export const TodoSuccess = () => {
         ? location.state.todoInfo
         : [location.state.todoInfo];
 
-      // 중복 추가 방지
       setTodos((prevTodos) => {
         const newTodos = todosArray.filter(
           (newTodo) => !prevTodos.some((prevTodo) => prevTodo.id === newTodo.id)
