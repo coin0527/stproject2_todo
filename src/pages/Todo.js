@@ -21,12 +21,13 @@ import {
 } from "./TodoStyle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEraser, faPencil, faShare } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import TodoCheck from "../components/TodoCheck";
 import "../style/style.css";
 
 export const Todo = () => {
   const [todos, setTodos] = useState([]);
+  const navigate = useNavigate();
 
   // 할 일 목록을 로컬 스토리지에서 불러오는 함수
   const loadTodosFromLocalStorage = () => {
@@ -93,6 +94,10 @@ export const Todo = () => {
     updateLocalStorageAndState(updatedTodos);
   };
 
+  const handleCheckTodos = (text) => {
+    navigate("/Todos", { state: { todos: [{ text }] } });
+  };
+
   const count = todos.length;
 
   return (
@@ -147,7 +152,13 @@ export const Todo = () => {
               </SContainer>
 
               <Buttonlist>
-                <TodoCheck />
+                <TodoCheck
+                  onTodoSuccess={() => {
+                    navigate("/Todos", {
+                      state: { todos: [{ text: todo.text }] },
+                    });
+                  }}
+                />
                 <Todore onEdit={(newText) => handleEdit(todo.id, newText)} />
                 <Tododelete index={todo.id} onDelete={handleDelete} />
               </Buttonlist>

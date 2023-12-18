@@ -3,9 +3,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
 const TodoCheck = ({ todo, onTodoSuccess }) => {
-  // useCallback을 사용하여 함수 생성 최적화
   const handleCheck = useCallback(() => {
-    onTodoSuccess(todo);
+    if (typeof onTodoSuccess === "function") {
+      onTodoSuccess(todo);
+    }
   }, [onTodoSuccess, todo]);
 
   return (

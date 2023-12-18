@@ -15,13 +15,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShare } from "@fortawesome/free-solid-svg-icons";
 import { Link, useLocation } from "react-router-dom";
 
-export const TodoSuccess = ({ completedTodos }) => {
+export const TodoSuccess = () => {
   const location = useLocation();
   const [todos, setTodos] = useState([]);
 
+  console.log(location.state);
+
   useEffect(() => {
     if (location.state && location.state.todoInfo) {
-      setTodos((prevTodos) => [location.state.todoInfo, ...prevTodos]);
+      setTodos((prevTodos) => [...location.state.todoInfo, ...prevTodos]);
     }
   }, [location.state]);
 
@@ -52,13 +54,14 @@ export const TodoSuccess = ({ completedTodos }) => {
             style={{ marginTop: "20px", fontSize: "20px" }}
           />
         </Link>
+
         <h3 style={{ fontSize: "20px", fontWeight: "600", marginTop: "20px" }}>
-          count : {count}
+          count: {count}
         </h3>
       </Containter2>
       <Container>
-        {completedTodos.length > 0 ? (
-          completedTodos.map((todo) => (
+        {todos.length > 0 ? (
+          todos.map((todo) => (
             <Box key={todo.id}>
               <SContainer>
                 <div>
@@ -71,6 +74,7 @@ export const TodoSuccess = ({ completedTodos }) => {
                 </div>
                 <Todolist>{todo.text}</Todolist>
               </SContainer>
+
               <Buttonlist>
                 <Tododelete index={todo.id} onDelete={handleDelete} />
               </Buttonlist>
