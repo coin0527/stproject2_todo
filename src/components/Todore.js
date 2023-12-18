@@ -8,7 +8,7 @@ const Todore = ({ onEdit }) => {
   const [modalInputValue, setModalInputValue] = useState("");
 
   const handleEditClick = () => {
-    setModalInputValue;
+    setModalInputValue("");
     setModalOpen(true);
   };
 
