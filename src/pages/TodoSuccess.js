@@ -52,12 +52,23 @@ export const TodoSuccess = () => {
 
   const handleDelete = (id) => {
     const updatedTodos = todos.filter((todo) => todo.id !== id);
+
+    // Find the deleted todo in completedTodos
+    const deletedTodo = completedTodos.find((todo) => todo.id === id);
+
     setTodos(updatedTodos);
-    setCompletedTodos(updatedTodos.filter((todo) => todo.checked));
+
+    if (deletedTodo) {
+      // Remove the deleted todo from completedTodos
+      setCompletedTodos((prevCompletedTodos) =>
+        prevCompletedTodos.filter((todo) => todo.id !== id)
+      );
+    }
+
     localStorage.setItem("todos", JSON.stringify(updatedTodos));
     localStorage.setItem(
       "completedTodos",
-      JSON.stringify(updatedTodos.filter((todo) => todo.checked))
+      JSON.stringify(completedTodos.filter((todo) => todo.id !== id))
     );
   };
 
@@ -88,7 +99,7 @@ export const TodoSuccess = () => {
     localStorage.setItem("completedTodos", JSON.stringify([]));
   };
 
-  const count = todos.length;
+  const count = completedTodos.length;
 
   return (
     <Wrap>
@@ -110,7 +121,7 @@ export const TodoSuccess = () => {
       </Containter2>
       <Container>
         <Footer>
-          <TodoCheckAll todos={todos} setTodos={setTodos} />
+          <TodoCheckAll todos={completedTodos} setTodos={setCompletedTodos} />
           <RightMenu>
             <FontAwesomeIcon
               icon={faEraser}

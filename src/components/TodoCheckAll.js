@@ -19,12 +19,12 @@ const TodoCheckAll = ({ todos, setTodos }) => {
 
   return (
     <FontAwesomeIcon
-      icon={allChecked ? faCheckSquareSolid : faCheckSquareSolid}
+      icon={faCheckSquareSolid}
       style={{
         fontSize: "30px",
         marginRight: "10px",
         cursor: "pointer",
-        color: "skyblue",
+        color: allChecked ? "skyblue" : "gray",
       }}
       onClick={handleCheckAll}
     />
