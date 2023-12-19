@@ -21,21 +21,18 @@ import TodoCheckAll from "../components/TodoCheckAll";
 export const TodoSuccess = () => {
   const location = useLocation();
   const [todos, setTodos] = useState([]);
-  const [completedTodos, setCompletedTodos] = useState([]); // completedTodos를 밖에서 정의
+  const [completedTodos, setCompletedTodos] = useState([]);
 
   useEffect(() => {
-    // Load todos from local storage when the component mounts
     const storedTodos = JSON.parse(localStorage.getItem("todos")) || [];
     setTodos(storedTodos);
 
-    // Load completedTodos from local storage
     const storedCompletedTodos =
       JSON.parse(localStorage.getItem("completedTodos")) || [];
     setCompletedTodos(storedCompletedTodos);
   }, []);
 
   useEffect(() => {
-    // Update todos when the location state changes (when navigating from Todo.js)
     if (location.state && location.state.todoInfo) {
       const todosArray = Array.isArray(location.state.todoInfo)
         ? location.state.todoInfo
@@ -53,13 +50,11 @@ export const TodoSuccess = () => {
   const handleDelete = (id) => {
     const updatedTodos = todos.filter((todo) => todo.id !== id);
 
-    // Find the deleted todo in completedTodos
     const deletedTodo = completedTodos.find((todo) => todo.id === id);
 
     setTodos(updatedTodos);
 
     if (deletedTodo) {
-      // Remove the deleted todo from completedTodos
       setCompletedTodos((prevCompletedTodos) =>
         prevCompletedTodos.filter((todo) => todo.id !== id)
       );
@@ -78,7 +73,6 @@ export const TodoSuccess = () => {
         todo.id === id ? { ...todo, checked: !todo.checked } : todo
       );
 
-      // Update completedTodos when todos change
       setCompletedTodos(updatedTodos.filter((todo) => todo.checked));
 
       localStorage.setItem("todos", JSON.stringify(updatedTodos));

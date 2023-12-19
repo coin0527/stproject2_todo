@@ -2,12 +2,12 @@ import React, { useCallback } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
-const TodoCheck = ({ todo, onTodoSuccess }) => {
+const TodoCheck = ({ onTodoSuccess }) => {
   const handleCheck = useCallback(() => {
     if (typeof onTodoSuccess === "function") {
-      onTodoSuccess(todo);
+      onTodoSuccess();
     }
-  }, [onTodoSuccess, todo]);
+  }, [onTodoSuccess]);
 
   return (
     <FontAwesomeIcon

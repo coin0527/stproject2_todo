@@ -24,6 +24,7 @@ import { faEraser, faPencil, faShare } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
 import TodoCheck from "../components/TodoCheck";
 import "../style/TodoStyle";
+// import { TodoSelect } from "../components/TodoSelect";
 
 export const Todo = () => {
   const [todos, setTodos] = useState([]);
@@ -119,13 +120,15 @@ export const Todo = () => {
       JSON.stringify([...completedTodos, completedTodo])
     );
 
-    navigate("/Todos", {
-      state: {
-        todoInfo: selectedTodos.map((selectedId) => ({
-          text: todos.find((todo) => todo.id === selectedId)?.text,
-        })),
-      },
-    });
+    if (-1 > 0) {
+      navigate("/Todos", {
+        state: {
+          todoInfo: selectedTodos.map((selectedId) => ({
+            text: todos.find((todo) => todo.id === selectedId)?.text,
+          })),
+        },
+      });
+    }
   };
 
   const count = todos.length;
@@ -146,7 +149,7 @@ export const Todo = () => {
               required: "내용을 입력해주세요.",
             })}
             type="text"
-            defaultValue="" // 초기값 설정
+            defaultValue=""
           />
         </Form>
         <Button onClick={handleSubmit(handleAddTodo)}> ADD </Button>
@@ -169,11 +172,7 @@ export const Todo = () => {
         <Footer>
           <TodoCheckAll todos={todos} setTodos={setTodosCallback} />
           <RightMenu>
-            <TodoCheck
-              completedTodos={selectedTodos.map((selectedId) =>
-                todos.find((todo) => todo.id === selectedId)
-              )}
-            />
+            {/* <TodoSelect /> */}
             <FontAwesomeIcon
               icon={faEraser}
               onClick={handleDeleteChecked}
