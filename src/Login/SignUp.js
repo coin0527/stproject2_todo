@@ -29,6 +29,7 @@ const Input = styled.input`
   margin-bottom: 15px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  text-align: center;
 `;
 
 const Button = styled.button`
@@ -136,19 +137,19 @@ export const SignUp = () => {
       <Form>
         <Input
           type="text"
-          placeholder="Username"
+          placeholder="name (3자리 이상)"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
         <Input
           type="password"
-          placeholder="Password"
+          placeholder="Password (6자리 이상)"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
         <Input
           type="email"
-          placeholder="Email"
+          placeholder="Email (이메일 형식)"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
