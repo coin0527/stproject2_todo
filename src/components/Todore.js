@@ -3,12 +3,13 @@ import { faPenToSquare, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../style/style.css";
 
-const Todore = ({ onEdit }) => {
+const Todore = ({ onEdit, existingText }) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [modalInputValue, setModalInputValue] = useState("");
 
   const handleEditClick = () => {
-    setModalInputValue("");
+    // 수정하기 버튼 클릭 시 기존 텍스트를 입력란에 설정
+    setModalInputValue(existingText);
     setModalOpen(true);
   };
 
@@ -34,10 +35,12 @@ const Todore = ({ onEdit }) => {
       {isModalOpen && (
         <div className="modal">
           <div className="modal-content">
+            <div className="modal-title">수정하기</div>
             <input
               type="text"
               value={modalInputValue}
               onChange={(e) => setModalInputValue(e.target.value)}
+              placeholder={`${existingText}`}
             />
             <button onClick={handleModalSave}>저장</button>
             <FontAwesomeIcon

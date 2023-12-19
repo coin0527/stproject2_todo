@@ -27,6 +27,7 @@ import "../style/TodoStyle";
 
 export const Todo = () => {
   const [todos, setTodos] = useState([]);
+  const [selectedTodos, setSelectedTodos] = useState([]);
   const navigate = useNavigate();
 
   const loadTodosFromLocalStorage = () => {
@@ -58,6 +59,15 @@ export const Todo = () => {
     localStorage.setItem("todos", JSON.stringify(updatedTodos));
   };
 
+  const handleCheckboxSelectionChange = (id) => {
+    setSelectedTodos((prevSelectedTodos) => {
+      const isSelected = prevSelectedTodos.includes(id);
+      return isSelected
+        ? prevSelectedTodos.filter((selectedId) => selectedId !== id)
+        : [...prevSelectedTodos, id];
+    });
+  };
+
   const handleCheckboxChange = (id) => {
     setTodos((prevTodos) => {
       const updatedTodos = prevTodos.map((todo) =>
@@ -66,6 +76,8 @@ export const Todo = () => {
       localStorage.setItem("todos", JSON.stringify(updatedTodos));
       return updatedTodos;
     });
+
+    handleCheckboxSelectionChange(id);
   };
 
   const handleDeleteChecked = () => {
@@ -99,7 +111,6 @@ export const Todo = () => {
     localStorage.setItem("todos", JSON.stringify(updatedTodos));
     setTodos(updatedTodos);
 
-    // Add the completed task to completedTodos
     const completedTodo = { id, text, checked: true };
     const completedTodos =
       JSON.parse(localStorage.getItem("completedTodos")) || [];
@@ -108,7 +119,13 @@ export const Todo = () => {
       JSON.stringify([...completedTodos, completedTodo])
     );
 
-    navigate("/Todos", { state: { todoInfo: [{ text }] } });
+    navigate("/Todos", {
+      state: {
+        todoInfo: selectedTodos.map((selectedId) => ({
+          text: todos.find((todo) => todo.id === selectedId)?.text,
+        })),
+      },
+    });
   };
 
   const count = todos.length;
@@ -152,7 +169,11 @@ export const Todo = () => {
         <Footer>
           <TodoCheckAll todos={todos} setTodos={setTodosCallback} />
           <RightMenu>
-            <TodoCheck completedTodos={todos.filter((todo) => todo.checked)} />
+            <TodoCheck
+              completedTodos={selectedTodos.map((selectedId) =>
+                todos.find((todo) => todo.id === selectedId)
+              )}
+            />
             <FontAwesomeIcon
               icon={faEraser}
               onClick={handleDeleteChecked}
@@ -175,7 +196,9 @@ export const Todo = () => {
                     type="checkbox"
                     style={{ marginBottom: "15px", marginRight: "10px" }}
                     checked={todo.checked}
-                    onChange={() => handleCheckboxChange(todo.id)}
+                    onChange={() => {
+                      handleCheckboxChange(todo.id);
+                    }}
                   />
                 </div>
 
@@ -186,7 +209,10 @@ export const Todo = () => {
                 <TodoCheck
                   onTodoSuccess={() => handleCheckTodos(todo.id, todo.text)}
                 />
-                <Todore onEdit={(newText) => handleEdit(todo.id, newText)} />
+                <Todore
+                  onEdit={(newText) => handleEdit(todo.id, newText)}
+                  existingText={todo.text}
+                />
                 <Tododelete index={todo.id} onDelete={handleDelete} />
               </Buttonlist>
             </Box>
