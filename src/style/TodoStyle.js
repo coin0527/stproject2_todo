@@ -44,7 +44,7 @@ export const Input = styled.input`
     width: 80%;
     height: 100px;
     border: none;
-    background-color: transparent;
+    background-color: #eee;
     color: black;
   }
 `;
@@ -73,7 +73,12 @@ export const Button = styled.button`
     height: 100px;
     border: none;
     font-size: 30px;
-    background-color: transparent;
+    background-color: #eee;
+    &:hover {
+      background-color: #333;
+      transition-duration: 1s;
+      color: white;
+    }
   }
 `;
 
@@ -110,7 +115,7 @@ export const Container = styled.div`
 export const Footer = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 0 3%;
+  padding: 0 1%;
   margin-bottom: 10px;
   border: 1px solid black;
   border-top: none;
