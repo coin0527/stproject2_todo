@@ -16,13 +16,12 @@ const Todore = ({ onEdit, existingText, onClick }) => {
     if (wrapElement) {
       wrapElement.classList.remove("dark-background");
     }
-    onClick(); // Todo.js에서 전달한 함수 호출하여 상태를 토글
+    onClick();
   }, [onClick]);
 
   const handleOutsideClick = useCallback(
     (e) => {
       if (modalRef.current && !modalRef.current.contains(e.target)) {
-        // 모달 외부를 클릭했을 때 모달을 닫음
         handleModalClose();
       }
     },
@@ -30,7 +29,6 @@ const Todore = ({ onEdit, existingText, onClick }) => {
   );
 
   useEffect(() => {
-    // 모달이 열릴 때, 모달 외부 클릭 이벤트를 추가
     if (isModalOpen) {
       document.addEventListener("mousedown", handleOutsideClick);
     } else {
@@ -38,13 +36,12 @@ const Todore = ({ onEdit, existingText, onClick }) => {
     }
 
     return () => {
-      // 컴포넌트가 언마운트될 때, 이벤트 리스너를 정리
       document.removeEventListener("mousedown", handleOutsideClick);
     };
-  }, [isModalOpen, handleOutsideClick]); // handleOutsideClick을 의존성 배열에 추가
+  }, [isModalOpen, handleOutsideClick]);
 
   const handleEditClick = () => {
-    onClick(); // Todo.js에서 전달한 함수 호출하여 상태를 토글
+    onClick();
     setModalInputValue(existingText);
     setModalOpen(true);
 
@@ -63,11 +60,10 @@ const Todore = ({ onEdit, existingText, onClick }) => {
     if (wrapElement) {
       wrapElement.classList.remove("dark-background");
     }
-    onClick(); // Todo.js에서 전달한 함수 호출하여 상태를 토글
+    onClick();
   };
 
   const handleModalBackgroundClick = (e) => {
-    // 모달 배경 클릭 시 모달을 닫음
     if (e.target.classList.contains("modal-background")) {
       handleModalClose();
     }

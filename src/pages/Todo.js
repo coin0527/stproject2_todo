@@ -26,7 +26,6 @@ import { Link, useNavigate } from "react-router-dom";
 import TodoCheck from "../components/TodoCheck";
 import "../style/TodoStyle";
 import { GlobalStyles } from "../style/GlobalStyles";
-// import { TodoSelect } from "../components/TodoSelect";
 
 export const Todo = () => {
   const [todos, setTodos] = useState([]);
@@ -178,7 +177,6 @@ export const Todo = () => {
             </LeftMenu>
 
             <RightMenu>
-              {/* <TodoSelect /> */}
               <FontAwesomeIcon
                 icon={faEraser}
                 onClick={handleDeleteChecked}

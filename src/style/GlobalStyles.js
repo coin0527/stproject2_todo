@@ -14,9 +14,7 @@ export const GlobalStyles = createGlobalStyle`
         word-break: break-all;
         transition: background-color 0.3s ease;
         background-color: ${(props) =>
-          props.isTodoreClicked
-            ? "#e0e0e0"
-            : "white"}; /* isTodoreClicked 상태에 따라 배경색 변경 */
+          props.isTodoreClicked ? "#e0e0e0" : "white"}; 
     }
     ul, li {
         list-style: none;
