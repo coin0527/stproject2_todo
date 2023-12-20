@@ -18,9 +18,10 @@ import {
   Buttonlist,
   Line,
   Containter2,
+  LeftMenu,
 } from "../style/TodoStyle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEraser, faPencil, faShare } from "@fortawesome/free-solid-svg-icons";
+import { faEraser, faPencil } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
 import TodoCheck from "../components/TodoCheck";
 import "../style/TodoStyle";
@@ -154,23 +155,16 @@ export const Todo = () => {
         </Form>
         <Button onClick={handleSubmit(handleAddTodo)}> ADD </Button>
       </InputWrap>
-      <Line />
-      <Containter2>
-        <Link to={"/todos"}>
-          <FontAwesomeIcon
-            icon={faShare}
-            style={{ marginTop: "20px", fontSize: "20px" }}
-          />
-        </Link>
 
-        <h3 style={{ fontSize: "20px", fontWeight: "600", marginTop: "20px" }}>
-          count : {count}
-        </h3>
-      </Containter2>
+      <Line />
 
       <Container>
         <Footer>
-          <TodoCheckAll todos={todos} setTodos={setTodosCallback} />
+          <LeftMenu>
+            <TodoCheckAll todos={todos} setTodos={setTodosCallback} />
+            <h3> 전체선택 </h3>
+          </LeftMenu>
+
           <RightMenu>
             {/* <TodoSelect /> */}
             <FontAwesomeIcon
@@ -193,7 +187,11 @@ export const Todo = () => {
                 <div>
                   <input
                     type="checkbox"
-                    style={{ marginBottom: "15px", marginRight: "10px" }}
+                    style={{
+                      marginBottom: "15px",
+                      marginRight: "10px",
+                      fontSize: "20px",
+                    }}
                     checked={todo.checked}
                     onChange={() => {
                       handleCheckboxChange(todo.id);
@@ -220,6 +218,39 @@ export const Todo = () => {
           <p>오늘의 할 일을 추가해주세요!!</p>
         )}
       </Container>
+
+      <Containter2>
+        <h3 style={{ fontSize: "20px", fontWeight: "600", marginTop: "10px" }}>
+          남은 할 일 : {count}
+        </h3>
+
+        <Link to={"/todos"}>
+          <button
+            style={{
+              backgroundColor: "transparent",
+              border: "none",
+              cursor: "pointer",
+              fontSize: "20px",
+              fontWeight: "600",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              color: "teal",
+              textDecoration: "none",
+            }}
+          >
+            <span
+              style={{
+                borderBottom: "1px solid teal",
+                padding: "5px",
+                marginBottom: "5px",
+              }}
+            >
+              Complete →
+            </span>
+          </button>
+        </Link>
+      </Containter2>
     </Wrap>
   );
 };

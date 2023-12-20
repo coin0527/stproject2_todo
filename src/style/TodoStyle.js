@@ -50,19 +50,14 @@ export const Input = styled.input`
 `;
 
 export const Button = styled.button`
-  all: unset;
-  width: 80px;
-  border: 1px solid black;
-  border-radius: 10px;
-  text-align: center;
-  background-color: skyblue;
-  color: #333;
+  padding: 10px 20px;
+  font-size: 18px;
   font-weight: 600;
-
-  &:hover {
-    background-color: #0056b3;
-    transition-duration: 0.5s;
-  }
+  background-color: teal;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 
   @media screen and (max-width: 500px) {
     border-radius: 0;
@@ -72,7 +67,7 @@ export const Button = styled.button`
     width: 20%;
     height: 100px;
     border: none;
-    font-size: 30px;
+    font-size: 20px;
     background-color: #eee;
     &:hover {
       background-color: #333;
@@ -94,6 +89,8 @@ export const Container = styled.div`
   transform: translate(-50%);
   padding: 10px;
   box-sizing: border-box;
+  border-radius: 20px;
+  padding: 1% 3%;
 
   p {
     position: absolute;
@@ -134,24 +131,33 @@ export const Complete = styled.button`
 
 export const Box = styled.div`
   width: 100%;
-  height: 10%;
+  height: 20%;
+  font-size: 24px;
   display: flex;
   padding: 15px 10px;
-  border: 1px solid black;
+  border: 1px solid #eee;
   justify-content: space-between;
   margin-bottom: 10px;
+  border-radius: 10px;
+
+  @media screen and (max-width: 500px) {
+    height: 15%;
+  }
 `;
 
 export const SContainer = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 export const Todolist = styled.div``;
 
-export const Buttonlist = styled.ul`
+export const Buttonlist = styled.div`
   button {
     margin-right: 10px;
   }
+  align-items: center;
+  margin-top: 15px;
 `;
 
 export const Button1 = styled.button``;
@@ -173,8 +179,17 @@ export const Containter2 = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 0 20%;
+  margin-top: 530px;
   @media screen and (max-width: 500px) {
-    padding: 1%;
-    margin-top: -60px;
+    margin-top: 650px;
+    padding: 0 10%;
+  }
+`;
+
+export const LeftMenu = styled.div`
+  display: flex;
+  align-items: center;
+  h3 {
+    font-size: 11px;
   }
 `;

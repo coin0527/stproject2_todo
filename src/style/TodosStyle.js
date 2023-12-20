@@ -95,6 +95,8 @@ export const Container = styled.div`
   transform: translate(-50%);
   padding: 10px;
   box-sizing: border-box;
+  border-radius: 20px;
+  padding: 1% 3%;
 
   p {
     position: absolute;
@@ -109,7 +111,7 @@ export const Container = styled.div`
     width: 100%;
     height: 100%;
     max-height: 650px;
-    top: 20%;
+    top: 15%;
   }
 `;
 
@@ -136,24 +138,33 @@ export const Complete = styled.button`
 
 export const Box = styled.div`
   width: 100%;
-  height: 10%;
+  height: 20%;
+  font-size: 24px;
   display: flex;
   padding: 15px 10px;
-  border: 1px solid black;
+  border: 1px solid #eee;
   justify-content: space-between;
   margin-bottom: 10px;
+  border-radius: 10px;
+
+  @media screen and (max-width: 500px) {
+    height: 15%;
+  }
 `;
 
 export const SContainer = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 export const Todolist = styled.div``;
 
-export const Buttonlist = styled.ul`
+export const Buttonlist = styled.div`
   button {
     margin-right: 10px;
   }
+  align-items: center;
+  margin-top: 15px;
 `;
 
 export const Button1 = styled.button``;
@@ -174,8 +185,9 @@ export const Containter2 = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 0 20%;
-
+  margin-top: 530px;
   @media screen and (max-width: 500px) {
-    padding: 2%;
+    margin-top: 670px;
+    padding: 0 10%;
   }
 `;
