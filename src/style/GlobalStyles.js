@@ -5,18 +5,23 @@ export const GlobalStyles = createGlobalStyle`
 
     ${reset}
 
-    *{
+    * {
         box-sizing: border-box;
     }
-    body{
-        font-family: 'Noto Sans KR', sans-serif; //폰트
+    body {
+        font-family: 'Noto Sans KR', sans-serif;
         letter-spacing: -1px;
         word-break: break-all;
+        transition: background-color 0.3s ease;
+        background-color: ${(props) =>
+          props.isTodoreClicked
+            ? "#e0e0e0"
+            : "white"}; /* isTodoreClicked 상태에 따라 배경색 변경 */
     }
-    ul,li{
+    ul, li {
         list-style: none;
     }
-    a{
+    a {
         text-decoration: none;
         color: black;
     }

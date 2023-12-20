@@ -25,12 +25,14 @@ import { faEraser, faPencil } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
 import TodoCheck from "../components/TodoCheck";
 import "../style/TodoStyle";
+import { GlobalStyles } from "../style/GlobalStyles";
 // import { TodoSelect } from "../components/TodoSelect";
 
 export const Todo = () => {
   const [todos, setTodos] = useState([]);
   const [selectedTodos, setSelectedTodos] = useState([]);
   const navigate = useNavigate();
+  const [isTodoreClicked, setTodoreClicked] = useState(false);
 
   const loadTodosFromLocalStorage = () => {
     const storedTodos = JSON.parse(localStorage.getItem("todos")) || [];
@@ -132,125 +134,139 @@ export const Todo = () => {
     }
   };
 
+  const handleBoxClick = (id) => {
+    handleCheckboxChange(id);
+  };
+
+  const handleTodoreClick = () => {
+    setTodoreClicked(!isTodoreClicked);
+  };
+
   const count = todos.length;
 
   return (
-    <Wrap>
-      <InputWrap>
-        <FontAwesomeIcon
-          icon={faPencil}
-          style={{
-            fontSize: "24px",
-            lineHeight: "50px",
-          }}
-        />
-        <Form onSubmit={handleSubmit(handleAddTodo)}>
-          <Input
-            {...register("search", {
-              required: "내용을 입력해주세요.",
-            })}
-            type="text"
-            defaultValue=""
-          />
-        </Form>
-        <Button onClick={handleSubmit(handleAddTodo)}> ADD </Button>
-      </InputWrap>
-
-      <Line />
-
-      <Container>
-        <Footer>
-          <LeftMenu>
-            <TodoCheckAll todos={todos} setTodos={setTodosCallback} />
-            <h3> 전체선택 </h3>
-          </LeftMenu>
-
-          <RightMenu>
-            {/* <TodoSelect /> */}
-            <FontAwesomeIcon
-              icon={faEraser}
-              onClick={handleDeleteChecked}
-              style={{
-                fontSize: "25px",
-                marginLeft: "25px",
-                cursor: "pointer",
-                color: "crimson",
-              }}
-            />
-          </RightMenu>
-        </Footer>
-
-        {todos.length > 0 ? (
-          todos.map((todo) => (
-            <Box key={todo.id}>
-              <SContainer>
-                <div>
-                  <input
-                    type="checkbox"
-                    style={{
-                      marginBottom: "15px",
-                      marginRight: "10px",
-                      fontSize: "20px",
-                    }}
-                    checked={todo.checked}
-                    onChange={() => {
-                      handleCheckboxChange(todo.id);
-                    }}
-                  />
-                </div>
-
-                <Todolist>{todo.text}</Todolist>
-              </SContainer>
-
-              <Buttonlist>
-                <TodoCheck
-                  onTodoSuccess={() => handleCheckTodos(todo.id, todo.text)}
-                />
-                <Todore
-                  onEdit={(newText) => handleEdit(todo.id, newText)}
-                  existingText={todo.text}
-                />
-                <Tododelete index={todo.id} onDelete={handleDelete} />
-              </Buttonlist>
-            </Box>
-          ))
-        ) : (
-          <p>오늘의 할 일을 추가해주세요!!</p>
-        )}
-      </Container>
-
-      <Containter2>
-        <h3 style={{ fontSize: "20px", fontWeight: "600", marginTop: "10px" }}>
-          남은 할 일 : {count}
-        </h3>
-
-        <Link to={"/todos"}>
-          <button
+    <>
+      <GlobalStyles isTodoreClicked={isTodoreClicked} />
+      <Wrap>
+        <InputWrap>
+          <FontAwesomeIcon
+            icon={faPencil}
             style={{
-              backgroundColor: "transparent",
-              border: "none",
-              cursor: "pointer",
-              fontSize: "20px",
-              fontWeight: "600",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              color: "teal",
-              textDecoration: "none",
+              fontSize: "24px",
+              lineHeight: "50px",
             }}
+          />
+          <Form onSubmit={handleSubmit(handleAddTodo)}>
+            <Input
+              {...register("search", {
+                required: "내용을 입력해주세요.",
+              })}
+              type="text"
+              defaultValue=""
+            />
+          </Form>
+          <Button onClick={handleSubmit(handleAddTodo)}> ADD </Button>
+        </InputWrap>
+
+        <Line />
+
+        <Container>
+          <Footer>
+            <LeftMenu>
+              <TodoCheckAll todos={todos} setTodos={setTodosCallback} />
+              <h3> 전체선택 </h3>
+            </LeftMenu>
+
+            <RightMenu>
+              {/* <TodoSelect /> */}
+              <FontAwesomeIcon
+                icon={faEraser}
+                onClick={handleDeleteChecked}
+                style={{
+                  fontSize: "25px",
+                  marginLeft: "25px",
+                  cursor: "pointer",
+                  color: "crimson",
+                }}
+              />
+            </RightMenu>
+          </Footer>
+
+          {todos.length > 0 ? (
+            todos.map((todo) => (
+              <Box key={todo.id} onClick={() => handleBoxClick(todo.id)}>
+                <SContainer>
+                  <div>
+                    <input
+                      type="checkbox"
+                      style={{
+                        marginBottom: "15px",
+                        marginRight: "10px",
+                        fontSize: "20px",
+                      }}
+                      checked={todo.checked}
+                      onChange={() => {
+                        handleCheckboxChange(todo.id);
+                      }}
+                    />
+                  </div>
+
+                  <Todolist>{todo.text}</Todolist>
+                </SContainer>
+
+                <Buttonlist>
+                  <TodoCheck
+                    onTodoSuccess={() => handleCheckTodos(todo.id, todo.text)}
+                  />
+                  <Todore
+                    onEdit={(newText) => handleEdit(todo.id, newText)}
+                    existingText={todo.text}
+                    onClick={handleTodoreClick}
+                  />
+                  <Tododelete index={todo.id} onDelete={handleDelete} />
+                </Buttonlist>
+              </Box>
+            ))
+          ) : (
+            <p>오늘의 할 일을 추가해주세요!!</p>
+          )}
+        </Container>
+
+        <Containter2>
+          <h3
+            style={{ fontSize: "20px", fontWeight: "600", marginTop: "10px" }}
           >
-            <span
+            남은 할 일 : {count}
+          </h3>
+
+          <Link to={"/todos"}>
+            <button
               style={{
-                borderBottom: "1px solid teal",
-                padding: "5px",
-                marginBottom: "5px",
+                backgroundColor: "transparent",
+                border: "none",
+                cursor: "pointer",
+                fontSize: "20px",
+                fontWeight: "600",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                color: "teal",
+                textDecoration: "none",
               }}
             >
-              Complete →
-            </span>
-          </button>
-        </Link>
-      </Containter2>
-    </Wrap>
+              <span
+                style={{
+                  borderBottom: "1px solid teal",
+                  padding: "5px",
+                  marginBottom: "5px",
+                }}
+              >
+                Complete →
+              </span>
+            </button>
+          </Link>
+        </Containter2>
+      </Wrap>
+    </>
   );
 };
