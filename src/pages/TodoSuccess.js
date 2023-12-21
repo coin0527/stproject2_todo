@@ -14,7 +14,7 @@ import {
   RightMenu,
 } from "../style/TodosStyle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEraser } from "@fortawesome/free-solid-svg-icons";
+import { faChevronLeft, faEraser } from "@fortawesome/free-solid-svg-icons";
 import { Link, useLocation } from "react-router-dom";
 import TodoCheckAll from "../components/TodoCheckAll";
 import { LeftMenu } from "../style/TodoStyle";
@@ -102,6 +102,20 @@ export const TodoSuccess = () => {
         <h3>완료목록</h3>
       </InputWrap>
       <Line />
+      <Containter2>
+        <Link to={"/todo"}>
+          <FontAwesomeIcon
+            icon={faChevronLeft}
+            style={{
+              fontSize: "40px",
+            }}
+          />
+        </Link>
+
+        <h3 style={{ fontSize: "20px", fontWeight: "600", marginTop: "10px" }}>
+          완료한 일 : {count}
+        </h3>
+      </Containter2>
 
       <Container>
         <Footer>
@@ -131,7 +145,7 @@ export const TodoSuccess = () => {
                 <div>
                   <input
                     type="checkbox"
-                    style={{ marginBottom: "15px", marginRight: "10px" }}
+                    style={{ marginRight: "15px" }}
                     checked={todo.checked}
                     onChange={() => handleCheckboxChange(todo.id)}
                   />
@@ -151,38 +165,6 @@ export const TodoSuccess = () => {
           <p>완료된 할 일이 없습니다.</p>
         )}
       </Container>
-      <Containter2>
-        <h3 style={{ fontSize: "20px", fontWeight: "600", marginTop: "10px" }}>
-          완료한 일 : {count}
-        </h3>
-
-        <Link to={"/todo"}>
-          <button
-            style={{
-              backgroundColor: "transparent",
-              border: "none",
-              cursor: "pointer",
-              fontSize: "20px",
-              fontWeight: "600",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              color: "teal",
-              textDecoration: "none",
-            }}
-          >
-            <span
-              style={{
-                borderBottom: "1px solid teal",
-                padding: "5px",
-                marginBottom: "5px",
-              }}
-            >
-              Active →
-            </span>
-          </button>
-        </Link>
-      </Containter2>
     </Wrap>
   );
 };

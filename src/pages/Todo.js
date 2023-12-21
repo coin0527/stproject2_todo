@@ -151,8 +151,8 @@ export const Todo = () => {
           <FontAwesomeIcon
             icon={faPencil}
             style={{
-              fontSize: "24px",
-              lineHeight: "50px",
+              fontSize: "30px",
+              marginTop: "8px",
             }}
           />
           <Form onSubmit={handleSubmit(handleAddTodo)}>
@@ -168,6 +168,34 @@ export const Todo = () => {
         </InputWrap>
 
         <Line />
+
+        <Containter2>
+          <Link to={"/todos"}>
+            <button
+              style={{
+                backgroundColor: "#3282f3",
+                border: "1px solid #3282f3",
+                cursor: "pointer",
+                fontSize: "20px",
+                fontWeight: "600",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                color: "#eee",
+                textDecoration: "none",
+                padding: "10px 5px",
+                borderRadius: "5px",
+              }}
+            >
+              Complete →
+            </button>
+          </Link>
+          <h3
+            style={{ fontSize: "20px", fontWeight: "600", marginTop: "15px" }}
+          >
+            남은 할 일 : {count}
+          </h3>
+        </Containter2>
 
         <Container>
           <Footer>
@@ -198,9 +226,7 @@ export const Todo = () => {
                     <input
                       type="checkbox"
                       style={{
-                        marginBottom: "15px",
                         marginRight: "10px",
-                        fontSize: "20px",
                       }}
                       checked={todo.checked}
                       onChange={() => {
@@ -229,41 +255,6 @@ export const Todo = () => {
             <p>오늘의 할 일을 추가해주세요!!</p>
           )}
         </Container>
-
-        <Containter2>
-          <h3
-            style={{ fontSize: "20px", fontWeight: "600", marginTop: "10px" }}
-          >
-            남은 할 일 : {count}
-          </h3>
-
-          <Link to={"/todos"}>
-            <button
-              style={{
-                backgroundColor: "transparent",
-                border: "none",
-                cursor: "pointer",
-                fontSize: "20px",
-                fontWeight: "600",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                color: "teal",
-                textDecoration: "none",
-              }}
-            >
-              <span
-                style={{
-                  borderBottom: "1px solid teal",
-                  padding: "5px",
-                  marginBottom: "5px",
-                }}
-              >
-                Complete →
-              </span>
-            </button>
-          </Link>
-        </Containter2>
       </Wrap>
     </>
   );

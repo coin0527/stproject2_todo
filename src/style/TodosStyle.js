@@ -5,26 +5,23 @@ export const Wrap = styled.div`
   height: 80vh;
   border-top: none;
   box-sizing: border-box;
+  @media screen and (max-width: 500px) {
+    padding: 20px;
+  }
 `;
 
 export const Form = styled.form`
-  width: 40%;
+  width: 50%;
 `;
 
 export const InputWrap = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 100px;
+  margin-top: 75px;
   h3 {
     font-size: 30px;
     font-weight: 600;
     margin-bottom: 10px;
-  }
-  @media screen and (max-width: 500px) {
-    margin-top: 30px;
-    h3 {
-      font-size: 40px;
-    }
   }
 `;
 
@@ -34,69 +31,39 @@ export const Input = styled.input`
   width: 95%;
   height: 30px;
   border: 1px solid black;
-  border-top: none;
-  border-left: none;
-  border-right: none;
+  border: none;
   font-size: 30px;
   font-weight: 600;
   letter-spacing: -1px;
   text-align: center;
 
   @media screen and (max-width: 500px) {
-    border-radius: 0;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 80%;
-    height: 100px;
-    border: none;
-    background-color: transparent;
-    color: black;
   }
 `;
 
 export const Button = styled.button`
-  all: unset;
-  width: 80px;
-  border: 1px solid black;
-  border-radius: 10px;
-  text-align: center;
-  background-color: skyblue;
-  color: #333;
+  padding: 10px 20px;
+  font-size: 18px;
   font-weight: 600;
-
-  &:hover {
-    background-color: #0056b3;
-    transition-duration: 0.5s;
-  }
+  background-color: #3282f3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 
   @media screen and (max-width: 500px) {
-    border-radius: 0;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 20%;
-    height: 100px;
-    border: none;
-    font-size: 30px;
-    background-color: transparent;
   }
 `;
 
 export const Container = styled.div`
   width: 60%;
-  height: 50%;
-  max-height: 500px;
+  height: 70%;
   overflow-y: auto;
-  border: 1px solid black;
-  position: absolute;
-  top: 25%;
-  left: 50%;
-  transform: translate(-50%);
-  padding: 10px;
+  border: 1px solid #dbdbdb;
   box-sizing: border-box;
   border-radius: 20px;
-  padding: 1% 3%;
+  padding: 30px;
+  margin: 0 auto;
 
   p {
     position: absolute;
@@ -110,8 +77,8 @@ export const Container = styled.div`
   @media screen and (max-width: 500px) {
     width: 100%;
     height: 100%;
-    max-height: 650px;
-    top: 15%;
+    max-height: 500px;
+    padding: 20px;
   }
 `;
 
@@ -119,13 +86,9 @@ export const Footer = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 0 1%;
-  border: 1px solid black;
-  border-top: none;
-  border-left: none;
-  border-right: none;
   margin-bottom: 10px;
+  border: none;
 `;
-
 export const RightMenu = styled.ul``;
 
 export const Complete = styled.button`
@@ -141,11 +104,13 @@ export const Box = styled.div`
   height: 20%;
   font-size: 24px;
   display: flex;
-  padding: 15px 10px;
+  padding: 24px;
   border: 1px solid #eee;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: 24px;
   border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
 
   @media screen and (max-width: 500px) {
     height: 15%;
@@ -164,7 +129,11 @@ export const Buttonlist = styled.div`
     margin-right: 10px;
   }
   align-items: center;
-  margin-top: 15px;
+  padding: 10px;
+
+  @media screen and (max-width: 500px) {
+    padding: 0px 10px;
+  }
 `;
 
 export const Button1 = styled.button``;
@@ -172,22 +141,32 @@ export const Button2 = styled.button``;
 export const Delete = styled.button``;
 
 export const Line = styled.div`
-  border: 1px solid black;
-  width: 50%;
+  border: 1px solid #555;
+  width: 60%;
   margin-top: 5px;
   position: relative;
-  left: 25%;
+  left: 20%;
+
   @media screen and (max-width: 500px) {
-    display: none;
+    width: 95%;
+    left: 1%;
   }
 `;
 export const Containter2 = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 0 20%;
-  margin-top: 530px;
+  margin: 22px 0;
   @media screen and (max-width: 500px) {
-    margin-top: 670px;
-    padding: 0 10%;
+    padding: 0 10px;
+  }
+`;
+
+export const LeftMenu = styled.div`
+  display: flex;
+  align-items: center;
+  h3 {
+    font-size: 14px;
+    color: #555;
   }
 `;

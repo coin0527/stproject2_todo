@@ -79,7 +79,12 @@ const Todore = ({ onEdit, existingText, onClick }) => {
     <>
       <FontAwesomeIcon
         icon={faPenToSquare}
-        style={{ fontSize: "20px", cursor: "pointer", marginLeft: "15px" }}
+        style={{
+          fontSize: "20px",
+          cursor: "pointer",
+          marginLeft: "15px",
+          color: "#555",
+        }}
         onClick={handleEditClick}
       />
 
