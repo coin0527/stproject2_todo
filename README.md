@@ -35,4 +35,4 @@ border color #dbdbdb 변경
 button 디자인수정(밑줄 빼기)
 완료페이지 뒤로가기 버튼으로 바꾸기
 전체선택 색감 통일(#3282f3(point color))
-asdnas
+asdnasasdasd
