@@ -176,7 +176,7 @@ export const Todo = () => {
                 backgroundColor: "#3282f3",
                 border: "1px solid #3282f3",
                 cursor: "pointer",
-                fontSize: "20px",
+                fontSize: "15px",
                 fontWeight: "600",
                 display: "flex",
                 flexDirection: "column",
@@ -187,7 +187,7 @@ export const Todo = () => {
                 borderRadius: "5px",
               }}
             >
-              Complete →
+              완료 →
             </button>
           </Link>
           <h3

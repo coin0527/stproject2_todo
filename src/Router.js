@@ -6,6 +6,7 @@ import { Todo } from "./pages/Todo";
 import { TodoSuccess } from "./pages/TodoSuccess";
 import { PageNotFound } from "./components/PagenotFound";
 import { Header } from "./components/Header";
+import { Copyright } from "./components/Copyright";
 
 const Router = () => {
   return (
@@ -18,6 +19,7 @@ const Router = () => {
         <Route path={routes.todos} element={<TodoSuccess />} />
         <Route path="/*" element={<PageNotFound />} />
       </Routes>
+      <Copyright />
     </HashRouter>
   );
 };
