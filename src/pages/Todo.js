@@ -141,6 +141,16 @@ export const Todo = () => {
     setTodoreClicked(!isTodoreClicked);
   };
 
+  const handleCheckAll = () => {
+    const allChecked = todos.every((todo) => todo.checked);
+    const updatedTodos = todos.map((todo) => ({
+      ...todo,
+      checked: !allChecked,
+    }));
+    setTodosCallback(updatedTodos);
+    setSelectedTodos(allChecked ? [] : todos.map((todo) => todo.id));
+  };
+
   const count = todos.length;
 
   return (
@@ -201,7 +211,7 @@ export const Todo = () => {
           <Footer>
             <LeftMenu>
               <TodoCheckAll todos={todos} setTodos={setTodosCallback} />
-              <h3> 전체선택 </h3>
+              <h3 onClick={handleCheckAll}>전체선택</h3>
             </LeftMenu>
 
             <RightMenu>
