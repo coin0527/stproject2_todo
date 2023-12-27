@@ -46,7 +46,7 @@ export const Input = styled.input`
 
 export const Button = styled.button`
   padding: 10px 20px;
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 600;
   background-color: #3282f3;
   color: white;
@@ -55,6 +55,7 @@ export const Button = styled.button`
   cursor: pointer;
 
   @media screen and (max-width: 500px) {
+    width: 80px;
   }
 `;
 
