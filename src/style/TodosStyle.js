@@ -12,6 +12,9 @@ export const Wrap = styled.div`
 
 export const Form = styled.form`
   width: 50%;
+  @media screen and (max-width: 500px) {
+    width: 75%;
+  }
 `;
 
 export const InputWrap = styled.div`
@@ -43,7 +46,7 @@ export const Input = styled.input`
 
 export const Button = styled.button`
   padding: 10px 20px;
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 600;
   background-color: #3282f3;
   color: white;
@@ -52,6 +55,8 @@ export const Button = styled.button`
   cursor: pointer;
 
   @media screen and (max-width: 500px) {
+    width: 80px;
+    margin-right: 23px;
   }
 `;
 
@@ -79,6 +84,7 @@ export const Container = styled.div`
     height: 100%;
     max-height: 500px;
     padding: 20px;
+    border: none;
   }
 `;
 
@@ -114,6 +120,7 @@ export const Box = styled.div`
 
   @media screen and (max-width: 500px) {
     height: 15%;
+    width: 100%;
   }
 `;
 
@@ -148,8 +155,8 @@ export const Line = styled.div`
   left: 20%;
 
   @media screen and (max-width: 500px) {
-    width: 95%;
-    left: 1%;
+    width: 90%;
+    left: 5%;
   }
 `;
 export const Containter2 = styled.div`
@@ -158,7 +165,10 @@ export const Containter2 = styled.div`
   padding: 0 20%;
   margin: 22px 0;
   @media screen and (max-width: 500px) {
-    padding: 0 10px;
+    padding: 0 23px;
+    h3 {
+      font-size: 10px;
+    }
   }
 `;
 
