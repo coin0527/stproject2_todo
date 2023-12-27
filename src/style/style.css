@@ -1,6 +1,8 @@
-.fa-pencil {
+.fa-plus {
+  color: #999;
+
   @media screen and (max-width: 500px) {
-    display: none;
+    margin-left: 20px;
   }
 }
 

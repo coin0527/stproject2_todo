@@ -21,7 +21,7 @@ import {
   LeftMenu,
 } from "../style/TodoStyle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEraser, faPencil } from "@fortawesome/free-solid-svg-icons";
+import { faEraser, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
 import TodoCheck from "../components/TodoCheck";
 import "../style/TodoStyle";
@@ -159,7 +159,7 @@ export const Todo = () => {
       <Wrap>
         <InputWrap>
           <FontAwesomeIcon
-            icon={faPencil}
+            icon={faPlus}
             style={{
               fontSize: "30px",
               marginTop: "8px",
@@ -201,7 +201,7 @@ export const Todo = () => {
             </button>
           </Link>
           <h3
-            style={{ fontSize: "20px", fontWeight: "600", marginTop: "15px" }}
+            style={{ fontSize: "16px", fontWeight: "600", marginTop: "15px" }}
           >
             남은 할 일 : {count}
           </h3>

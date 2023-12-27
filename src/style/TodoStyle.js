@@ -56,6 +56,7 @@ export const Button = styled.button`
 
   @media screen and (max-width: 500px) {
     width: 80px;
+    margin-right: 23px;
   }
 `;
 
@@ -82,7 +83,8 @@ export const Container = styled.div`
     width: 100%;
     height: 100%;
     max-height: 500px;
-    padding: 20px;
+    padding: 30px;
+    border: none;
   }
 `;
 
@@ -118,6 +120,7 @@ export const Box = styled.div`
 
   @media screen and (max-width: 500px) {
     height: 15%;
+    width: 100%;
   }
 `;
 
@@ -152,8 +155,8 @@ export const Line = styled.div`
   left: 20%;
 
   @media screen and (max-width: 500px) {
-    width: 95%;
-    left: 1%;
+    width: 90%;
+    left: 5%;
   }
 `;
 export const Containter2 = styled.div`
@@ -162,7 +165,10 @@ export const Containter2 = styled.div`
   padding: 0 20%;
   margin: 22px 0;
   @media screen and (max-width: 500px) {
-    padding: 0 10px;
+    padding: 0 23px;
+    h3 {
+      font-size: 10px;
+    }
   }
 `;
 
