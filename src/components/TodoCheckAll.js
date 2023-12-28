@@ -5,7 +5,7 @@ import {
   faSquare,
 } from "@fortawesome/free-regular-svg-icons";
 
-const TodoCheckAll = ({ todos, setTodos }) => {
+const TodoCheckAll = ({ todos, setCompletedTodos }) => {
   const handleCheckAll = useCallback(() => {
     const allChecked = todos.every((todo) => todo.checked);
     const updatedTodos = todos.map((todo) => ({
@@ -13,10 +13,10 @@ const TodoCheckAll = ({ todos, setTodos }) => {
       checked: !allChecked,
     }));
 
-    setTodos(updatedTodos);
+    setCompletedTodos(updatedTodos);
 
-    localStorage.setItem("todos", JSON.stringify(updatedTodos));
-  }, [todos, setTodos]);
+    localStorage.setItem("completedTodos", JSON.stringify(updatedTodos));
+  }, [todos, setCompletedTodos]);
 
   const allChecked = todos.length > 0 && todos.every((todo) => todo.checked);
 

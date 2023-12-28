@@ -18,9 +18,8 @@ export const Form = styled.form`
 `;
 
 export const InputWrap = styled.div`
-  display: flex;
-  justify-content: center;
   margin-top: 75px;
+  text-align: center;
   h3 {
     font-size: 30px;
     font-weight: 600;
@@ -95,7 +94,9 @@ export const Footer = styled.div`
   margin-bottom: 10px;
   border: none;
 `;
-export const RightMenu = styled.ul``;
+export const RightMenu = styled.div`
+  display: flex;
+`;
 
 export const Complete = styled.button`
   margin-top: 10px;

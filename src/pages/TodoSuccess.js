@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Tododelete } from "../components/Tododelete";
 import {
   Wrap,
@@ -50,7 +50,6 @@ export const TodoSuccess = () => {
 
   const handleDelete = (id) => {
     const updatedTodos = todos.filter((todo) => todo.id !== id);
-
     const deletedTodo = completedTodos.find((todo) => todo.id === id);
 
     setTodos(updatedTodos);
@@ -61,11 +60,10 @@ export const TodoSuccess = () => {
       );
     }
 
-    localStorage.setItem("todos", JSON.stringify(updatedTodos));
-    localStorage.setItem(
-      "completedTodos",
-      JSON.stringify(completedTodos.filter((todo) => todo.id !== id))
-    );
+    setCompletedTodos((prevCompletedTodos) => {
+      localStorage.setItem("todos", JSON.stringify(updatedTodos));
+      return prevCompletedTodos.filter((todo) => todo.id !== id);
+    });
   };
 
   const handleCheckboxChange = (id) => {
@@ -74,24 +72,46 @@ export const TodoSuccess = () => {
         todo.id === id ? { ...todo, checked: !todo.checked } : todo
       );
 
-      setCompletedTodos(updatedTodos.filter((todo) => todo.checked));
-
-      localStorage.setItem("todos", JSON.stringify(updatedTodos));
-      localStorage.setItem(
-        "completedTodos",
-        JSON.stringify(updatedTodos.filter((todo) => todo.checked))
-      );
+      setCompletedTodos((prevCompletedTodos) => {
+        localStorage.setItem("todos", JSON.stringify(updatedTodos));
+        return updatedTodos.filter((todo) => todo.checked);
+      });
 
       return updatedTodos;
     });
   };
 
+  const handleBoxClick = (id) => {
+    setCompletedTodos((prevCompletedTodos) => {
+      const updatedTodos = prevCompletedTodos.map((todo) =>
+        todo.id === id ? { ...todo, checked: !todo.checked } : todo
+      );
+
+      localStorage.setItem("completedTodos", JSON.stringify(updatedTodos));
+      return updatedTodos;
+    });
+  };
+
+  const handleCheckAll = useCallback(() => {
+    const allChecked = completedTodos.every((todo) => todo.checked);
+    const updatedTodos = completedTodos.map((todo) => ({
+      ...todo,
+      checked: !allChecked,
+    }));
+
+    setCompletedTodos((prevCompletedTodos) => {
+      localStorage.setItem("completedTodos", JSON.stringify(updatedTodos));
+      return updatedTodos;
+    });
+  }, [completedTodos, setCompletedTodos]);
+
   const handleDeleteChecked = () => {
-    const updatedTodos = todos.filter((todo) => !todo.checked);
-    setTodos(updatedTodos);
-    setCompletedTodos([]);
-    localStorage.setItem("todos", JSON.stringify(updatedTodos));
-    localStorage.setItem("completedTodos", JSON.stringify([]));
+    const updatedTodos = completedTodos.filter((todo) => !todo.checked);
+
+    setCompletedTodos((prevCompletedTodos) => {
+      localStorage.setItem("completedTodos", JSON.stringify(updatedTodos));
+      return updatedTodos;
+    });
   };
 
   const count = completedTodos.length;
@@ -107,12 +127,12 @@ export const TodoSuccess = () => {
           <FontAwesomeIcon
             icon={faChevronLeft}
             style={{
-              fontSize: "40px",
+              fontSize: "30px",
+              color: "#808080",
             }}
           />
         </Link>
-
-        <h3 style={{ fontSize: "20px", fontWeight: "600", marginTop: "10px" }}>
+        <h3 style={{ fontSize: "16px", fontWeight: "600", marginTop: "10px" }}>
           완료한 일 : {count}
         </h3>
       </Containter2>
@@ -120,8 +140,11 @@ export const TodoSuccess = () => {
       <Container>
         <Footer>
           <LeftMenu>
-            <TodoCheckAll todos={completedTodos} setTodos={setCompletedTodos} />
-            <h3> 전체선택 </h3>
+            <TodoCheckAll
+              todos={completedTodos}
+              setCompletedTodos={setCompletedTodos}
+            />
+            <h3 onClick={handleCheckAll}> 전체선택 </h3>
           </LeftMenu>
 
           <RightMenu>
@@ -140,7 +163,7 @@ export const TodoSuccess = () => {
 
         {completedTodos.length > 0 ? (
           completedTodos.map((todo) => (
-            <Box key={todo.id}>
+            <Box key={todo.id} onClick={() => handleBoxClick(todo.id)}>
               <SContainer>
                 <div>
                   <input

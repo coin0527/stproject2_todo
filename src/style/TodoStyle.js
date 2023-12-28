@@ -95,7 +95,9 @@ export const Footer = styled.div`
   margin-bottom: 10px;
   border: none;
 `;
-export const RightMenu = styled.ul``;
+export const RightMenu = styled.div`
+  display: flex;
+`;
 
 export const Complete = styled.button`
   margin-top: 10px;
@@ -161,7 +163,7 @@ export const Line = styled.div`
 `;
 export const Containter2 = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: right;
   padding: 0 20%;
   margin: 22px 0;
   @media screen and (max-width: 500px) {

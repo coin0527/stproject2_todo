@@ -180,26 +180,6 @@ export const Todo = () => {
         <Line />
 
         <Containter2>
-          <Link to={"/todos"}>
-            <button
-              style={{
-                backgroundColor: "#3282f3",
-                border: "1px solid #3282f3",
-                cursor: "pointer",
-                fontSize: "15px",
-                fontWeight: "600",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                color: "#eee",
-                textDecoration: "none",
-                padding: "10px 5px",
-                borderRadius: "5px",
-              }}
-            >
-              완료 →
-            </button>
-          </Link>
           <h3
             style={{ fontSize: "16px", fontWeight: "600", marginTop: "15px" }}
           >
@@ -215,6 +195,27 @@ export const Todo = () => {
             </LeftMenu>
 
             <RightMenu>
+              <Link to={"/todos"}>
+                <button
+                  style={{
+                    backgroundColor: "#3282f3",
+                    border: "1px solid #3282f3",
+                    cursor: "pointer",
+                    fontSize: "15px",
+                    fontWeight: "600",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    color: "#eee",
+                    textDecoration: "none",
+                    padding: "3px 6px",
+                    borderRadius: "5px",
+                  }}
+                >
+                  완료
+                </button>
+              </Link>
+
               <FontAwesomeIcon
                 icon={faEraser}
                 onClick={handleDeleteChecked}
