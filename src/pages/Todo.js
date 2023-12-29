@@ -190,7 +190,11 @@ export const Todo = () => {
         <Container>
           <Footer>
             <LeftMenu>
-              <TodoCheckAll todos={todos} setTodos={setTodosCallback} />
+              <TodoCheckAll
+                todos={todos}
+                setCompletedTodos={setTodosCallback}
+                selectedTodos={selectedTodos}
+              />
               <h3 onClick={handleCheckAll}>전체선택</h3>
             </LeftMenu>
 
@@ -243,6 +247,7 @@ export const Todo = () => {
                       onChange={() => {
                         handleCheckboxChange(todo.id);
                       }}
+                      onClick={() => handleBoxClick(todo.id)}
                     />
                   </div>
 

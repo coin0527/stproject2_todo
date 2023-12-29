@@ -65,45 +65,28 @@ export const TodoSuccess = () => {
       return prevCompletedTodos.filter((todo) => todo.id !== id);
     });
   };
-
-  const handleCheckboxChange = (id) => {
-    setTodos((prevTodos) => {
-      const updatedTodos = prevTodos.map((todo) =>
-        todo.id === id ? { ...todo, checked: !todo.checked } : todo
-      );
-
-      setCompletedTodos((prevCompletedTodos) => {
-        localStorage.setItem("todos", JSON.stringify(updatedTodos));
-        return updatedTodos.filter((todo) => todo.checked);
-      });
-
-      return updatedTodos;
-    });
-  };
-
   const handleBoxClick = (id) => {
     setCompletedTodos((prevCompletedTodos) => {
       const updatedTodos = prevCompletedTodos.map((todo) =>
         todo.id === id ? { ...todo, checked: !todo.checked } : todo
       );
-
       localStorage.setItem("completedTodos", JSON.stringify(updatedTodos));
+
       return updatedTodos;
     });
   };
 
   const handleCheckAll = useCallback(() => {
-    const allChecked = completedTodos.every((todo) => todo.checked);
-    const updatedTodos = completedTodos.map((todo) => ({
-      ...todo,
-      checked: !allChecked,
-    }));
-
     setCompletedTodos((prevCompletedTodos) => {
+      const allChecked = prevCompletedTodos.every((todo) => todo.checked);
+      const updatedTodos = prevCompletedTodos.map((todo) => ({
+        ...todo,
+        checked: !allChecked,
+      }));
       localStorage.setItem("completedTodos", JSON.stringify(updatedTodos));
       return updatedTodos;
     });
-  }, [completedTodos, setCompletedTodos]);
+  }, [setCompletedTodos]);
 
   const handleDeleteChecked = () => {
     const updatedTodos = completedTodos.filter((todo) => !todo.checked);
@@ -170,7 +153,7 @@ export const TodoSuccess = () => {
                     type="checkbox"
                     style={{ marginRight: "15px" }}
                     checked={todo.checked}
-                    onChange={() => handleCheckboxChange(todo.id)}
+                    onClick={() => handleBoxClick(todo.id)}
                   />
                 </div>
                 <Todolist>{todo.text}</Todolist>
